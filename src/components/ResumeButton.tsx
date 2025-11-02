@@ -14,7 +14,7 @@ const ResumeButton: React.FC<ResumeButtonProps> = ({
   const buttonContent = (
     <button
       onClick={onClick}
-      className="cursor-pointer flex justify-between bg-gray-800 px-3 py-2 rounded-full text-white tracking-wider shadow-xl hover:bg-gray-900 hover:scale-105 duration-500 hover:ring-1 font-sans w-[150px]"
+      className="cursor-pointer flex justify-between bg-gray-800 px-4 py-[0.35em] rounded-full text-white tracking-wider shadow-xl hover:bg-gray-900 hover:scale-105 duration-500 hover:ring-1 font-sans w-[150px] h-[45px] sm:h-[48px] lg:h-[46px] items-center text-[18px]"
     >
       {children}
       <svg

@@ -2,20 +2,28 @@
 
 :root {
   --background: #f5fffa;
+  --background-rgb: 245, 255, 250;
   --foreground: #000000;
+  --foreground-rgb: 0, 0, 0;
   --primary: #2563eb;
   --primary-hover: #1d4ed8;
   --secondary: #f3f4f6;
   --accent: #e0e7ff;
+  --border: #e5e7eb;
+  --border-rgb: 229, 231, 235;
 }
 
 .dark {
   --background: #000000;
+  --background-rgb: 0, 0, 0;
   --foreground: #ffffff;
+  --foreground-rgb: 255, 255, 255;
   --primary: #3b82f6;
   --primary-hover: #2563eb;
   --secondary: #1f2937;
   --accent: #1e293b;
+  --border: #374151;
+  --border-rgb: 55, 65, 81;
 }
 
 @theme inline {
@@ -83,34 +91,24 @@ textarea {
   color: white;
 }
 
-/* Animation keyframes */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+/* Custom animations */
+@keyframes tilt {
+  0% {
+    transform: rotate(0deg);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  25% {
+    transform: rotate(-10deg);
   }
-}
-
-@keyframes float {
-  0%,
+  75% {
+    transform: rotate(10deg);
+  }
   100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
+    transform: rotate(0deg);
   }
 }
 
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
+.animate-tilt {
+  animation: tilt 5s linear infinite;
 }
 
 /* Responsive text scaling */

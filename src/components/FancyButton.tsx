@@ -15,7 +15,7 @@ const FancyButton: React.FC<FancyButtonProps> = ({
   const buttonContent = (
     <button
       onClick={onClick}
-      className="bg-gradient-to-r from-cyan-400 to-purple-500 text-white font-medium text-[17px] px-5 pr-14 py-[0.35em] rounded-[10em] border-none tracking-[0.05em] flex items-center overflow-hidden relative h-[2.8em] cursor-pointer uppercase group shadow-[0_0_1.6em_rgba(183,33,255,0.3),0_0_1.6em_rgba(33,212,253,0.3)] transition-all duration-600 ease-[cubic-bezier(0.23,1,0.320,1)] hover:shadow-[0_0_2em_rgba(183,33,255,0.4),0_0_2em_rgba(33,212,253,0.4)] active:scale-90"
+      className="bg-linear-to-r from-cyan-400 to-purple-500 text-white font-medium text-[17px] px-5 pr-14 py-[0.35em] rounded-[10em] border-none tracking-[0.05em] flex items-center overflow-hidden relative h-[2.8em] cursor-pointer uppercase group shadow-[0_0_1.6em_rgba(183,33,255,0.3),0_0_1.6em_rgba(33,212,253,0.3)] transition-all duration-600 ease-[cubic-bezier(0.23,1,0.320,1)] hover:shadow-[0_0_2em_rgba(183,33,255,0.4),0_0_2em_rgba(33,212,253,0.4)] active:scale-90"
     >
       <span className="z-10">{children}</span>
 

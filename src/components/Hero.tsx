@@ -112,7 +112,7 @@ const Hero: React.FC = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <div className="flex flex-row gap-4 justify-center lg:justify-start">
               <FancyButton href="#projects">{t("hero.hireMe")}</FancyButton>
               <ResumeButton href="/cv.pdf">{t("hero.resume")}</ResumeButton>
             </div>
