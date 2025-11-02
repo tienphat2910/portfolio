@@ -2,11 +2,12 @@ import Hero from "../components/Hero";
 import About from "../components/About";
 import Projects from "../components/Projects";
 import Contact from "../components/Contact";
-import Header from "../components/Header";
+import AuroraGradientBackground from "../components/AuroraGradientBackground";
 
 export default function Home() {
   return (
-    <main className="pt-16">
+    <main className="pt-16 relative">
+      <AuroraGradientBackground />
       <Hero />
       <About />
       <Projects />

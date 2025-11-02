@@ -4,7 +4,6 @@ import "./globals.css";
 import { ThemeProvider } from "../contexts/ThemeContext";
 import { LanguageProvider } from "../contexts/LanguageContext";
 import Header from "../components/Header";
-import AuroraGradientBackground from "../components/AuroraGradientBackground";
 import "boxicons/css/boxicons.min.css";
 import "devicon/devicon.min.css";
 
@@ -36,7 +35,6 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <LanguageProvider>
-            <AuroraGradientBackground />
             <Header />
             {children}
           </LanguageProvider>

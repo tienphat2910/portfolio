@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const AuroraGradientBackground = () => {
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+    <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
       {/* Base gradient background for full coverage */}
       <div className="absolute inset-0 bg-linear-to-br from-purple-900/20 via-blue-900/20 to-indigo-900/20" />
 

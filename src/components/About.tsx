@@ -17,12 +17,7 @@ const About: React.FC = () => {
   ];
 
   return (
-    <section
-      ref={aboutRef}
-      id="about"
-      className="py-16 sm:py-20 lg:py-24"
-      style={{ backgroundColor: "var(--secondary)", opacity: 0.9 }}
-    >
+    <section ref={aboutRef} id="about" className="py-16 sm:py-20 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2
