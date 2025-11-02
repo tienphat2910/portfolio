@@ -16,8 +16,8 @@
     "description1": "Tôi là một nhà phát triển Frontend đam mê tạo ra các trải nghiệm web đẹp mắt và chức năng. Với niềm yêu thích công nghệ và thiết kế, tôi luôn tìm cách kết hợp giữa tính thẩm mỹ và hiệu suất để mang đến những sản phẩm chất lượng cao.",
     "description2": "Tôi chuyên về React, Next.js, TypeScript và các công nghệ frontend hiện đại. Luôn học hỏi và cập nhật những xu hướng mới nhất trong ngành để tạo ra những giải pháp tốt nhất.",
     "followMe": "Theo dõi tôi trên:",
-    "exploreProjects": "Khám phá Dự án của Tôi",
-    "downloadCV": "Tải CV"
+    "hireMe": "Thuê tôi",
+    "resume": "Tải CV"
   },
   "about": {
     "title": "Giới thiệu về tôi",

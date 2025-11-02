@@ -5,14 +5,9 @@ import { useTheme } from "../contexts/ThemeContext";
 import { useGSAPAnimations } from "../hooks/useGSAPAnimations";
 import TypingAnimation from "./TypingAnimation";
 import FloatingIcons from "./FloatingIcons";
-import {
-  Github,
-  Facebook,
-  Instagram,
-  Linkedin,
-  Download,
-  ExternalLink
-} from "lucide-react";
+import FancyButton from "./FancyButton";
+import ResumeButton from "./ResumeButton";
+import { Github, Facebook, Instagram, Linkedin } from "lucide-react";
 
 const Hero: React.FC = () => {
   const { t, tArray } = useLanguage();
@@ -118,21 +113,8 @@ const Hero: React.FC = () => {
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <a
-                href="#projects"
-                className="inline-flex items-center justify-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
-              >
-                <ExternalLink size={18} className="mr-2" />
-                {t("hero.exploreProjects")}
-              </a>
-              <a
-                href="/cv.pdf"
-                download
-                className="inline-flex items-center justify-center px-6 py-3 border-2 border-blue-600 text-blue-600 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:text-white font-medium rounded-lg transition-colors duration-200"
-              >
-                <Download size={18} className="mr-2" />
-                {t("hero.downloadCV")}
-              </a>
+              <FancyButton href="#projects">{t("hero.hireMe")}</FancyButton>
+              <ResumeButton href="/cv.pdf">{t("hero.resume")}</ResumeButton>
             </div>
 
             {/* Social Links */}
