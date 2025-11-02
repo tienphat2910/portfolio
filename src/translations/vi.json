@@ -1,0 +1,56 @@
+{
+  "nav": {
+    "home": "Trang chủ",
+    "about": "Giới thiệu",
+    "projects": "Dự án",
+    "contact": "Liên hệ"
+  },
+  "hero": {
+    "greeting": "Xin chào, tôi là Nguyễn Tiến Phát",
+    "typingTexts": [
+      "Frontend Developer",
+      "UI/UX Designer",
+      "React Specialist",
+      "Web Developer"
+    ],
+    "description1": "Tôi là một nhà phát triển Frontend đam mê tạo ra các trải nghiệm web đẹp mắt và chức năng. Với niềm yêu thích công nghệ và thiết kế, tôi luôn tìm cách kết hợp giữa tính thẩm mỹ và hiệu suất để mang đến những sản phẩm chất lượng cao.",
+    "description2": "Tôi chuyên về React, Next.js, TypeScript và các công nghệ frontend hiện đại. Luôn học hỏi và cập nhật những xu hướng mới nhất trong ngành để tạo ra những giải pháp tốt nhất.",
+    "followMe": "Theo dõi tôi trên:",
+    "exploreProjects": "Khám phá Dự án của Tôi",
+    "downloadCV": "Tải CV"
+  },
+  "about": {
+    "title": "Giới thiệu về tôi",
+    "content": "Tôi là một nhà phát triển front-end đam mê với kinh nghiệm trong React, Next.js và Three.js. Tôi yêu thích việc tạo ra các trang web tương tác và hấp dẫn về mặt thị giác. [Thêm giáo dục, kỹ năng, kinh nghiệm của bạn ở đây.]"
+  },
+  "projects": {
+    "title": "Dự án",
+    "project1": {
+      "name": "Dự án Một",
+      "description": "Mô tả của dự án đầu tiên."
+    },
+    "project2": {
+      "name": "Dự án Hai",
+      "description": "Mô tả của dự án thứ hai."
+    },
+    "project3": {
+      "name": "Dự án Ba",
+      "description": "Mô tả của dự án thứ ba."
+    },
+    "project4": {
+      "name": "Dự án Bốn",
+      "description": "Mô tả của dự án thứ tư."
+    }
+  },
+  "contact": {
+    "title": "Liên hệ với tôi",
+    "name": "Tên",
+    "email": "Email",
+    "message": "Tin nhắn",
+    "send": "Gửi"
+  },
+  "toggles": {
+    "language": "EN",
+    "theme": "Tối"
+  }
+}

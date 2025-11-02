@@ -1,0 +1,56 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hi, I'm Phat Nguyen",
+    "typingTexts": [
+      "Frontend Developer",
+      "UI/UX Designer",
+      "React Specialist",
+      "Web Developer"
+    ],
+    "description1": "I am a passionate Frontend developer who creates beautiful and functional web experiences. With a love for technology and design, I always find ways to combine aesthetics and performance to deliver high-quality products.",
+    "description2": "I specialize in React, Next.js, TypeScript and modern frontend technologies. I always learn and update the latest trends in the industry to create the best solutions.",
+    "followMe": "Follow me on:",
+    "exploreProjects": "Explore My Projects",
+    "downloadCV": "Download CV"
+  },
+  "about": {
+    "title": "About Me",
+    "content": "I am a passionate front-end developer with experience in React, Next.js, and Three.js. I love creating interactive and visually appealing websites. [Add your education, skills, experience here.]"
+  },
+  "projects": {
+    "title": "Projects",
+    "project1": {
+      "name": "Project One",
+      "description": "A description of the first project."
+    },
+    "project2": {
+      "name": "Project Two",
+      "description": "A description of the second project."
+    },
+    "project3": {
+      "name": "Project Three",
+      "description": "A description of the third project."
+    },
+    "project4": {
+      "name": "Project Four",
+      "description": "A description of the fourth project."
+    }
+  },
+  "contact": {
+    "title": "Contact Me",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send"
+  },
+  "toggles": {
+    "language": "VI",
+    "theme": "Dark"
+  }
+}
