@@ -12,7 +12,7 @@ const ThemeToggle: React.FC = () => {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
-          className="w-full h-full text-yellow-400 animate-spin"
+          className="w-full h-full text-yellow-300 animate-spin"
           style={{ animationDuration: "15s" }}
         >
           <g fill="currentColor">

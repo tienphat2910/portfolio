@@ -37,6 +37,19 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
       document.documentElement.removeAttribute("data-theme");
       document.documentElement.classList.remove("dark");
     }
+    // Tell browsers (Edge in particular) the preferred color scheme so
+    // CSS custom properties are recalculated. This helps Edge pick up
+    // changes to --foreground / other vars immediately.
+    try {
+      (document.documentElement.style as any).colorScheme =
+        theme === "dark" ? "dark" : "light";
+      // Force a reflow so the UA applies updated custom properties now.
+      // Reading offsetHeight is a cheap way to trigger it.
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      document.documentElement.offsetHeight;
+    } catch (e) {
+      // ignore in environments where document is not available
+    }
     // Save to localStorage
     localStorage.setItem("theme", theme);
   }, [theme]);

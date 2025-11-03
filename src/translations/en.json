@@ -9,9 +9,9 @@
     "greeting": "Hi, I'm Phat Nguyen",
     "typingTexts": [
       "Frontend Developer",
-      "UI/UX Designer",
-      "React Specialist",
-      "Web Developer"
+      "Web Developer",
+      "API Developer",
+      "Mobile App Developer"
     ],
     "description1": "I am a passionate Frontend developer who creates beautiful and functional web experiences. With a love for technology and design, I always find ways to combine aesthetics and performance to deliver high-quality products.",
     "description2": "I specialize in React, Next.js, TypeScript and modern frontend technologies. I always learn and update the latest trends in the industry to create the best solutions.",
@@ -80,8 +80,49 @@
     "message": "Message",
     "send": "Send"
   },
-  "toggles": {
-    "language": "VI",
-    "theme": "Dark"
+  "services": {
+    "title": "What I Do",
+    "webDevelopment": {
+      "title": "Web Development",
+      "description": "Creating responsive, modern websites and web applications with cutting-edge technologies and best practices.",
+      "features": {
+        "0": "Responsive Design",
+        "1": "Performance Optimization",
+        "2": "SEO Friendly",
+        "3": "Cross-browser Compatibility"
+      }
+    },
+    "ecommerce": {
+      "title": "E-commerce Solutions",
+      "description": "Building comprehensive online stores with secure payment integration and user-friendly shopping experiences.",
+      "features": {
+        "0": "Payment Gateway Integration",
+        "1": "Inventory Management",
+        "2": "Order Tracking",
+        "3": "Customer Analytics"
+      }
+    },
+    "mobileDevelopment": {
+      "title": "Mobile Development",
+      "description": "Developing native and cross-platform mobile applications for iOS and Android devices.",
+      "features": {
+        "0": "Native Performance",
+        "1": "Cross-platform Support",
+        "2": "App Store Optimization",
+        "3": "Offline Functionality"
+      }
+    },
+    "apiDevelopment": {
+      "title": "API Development",
+      "description": "Designing and implementing robust RESTful APIs and microservices for scalable applications.",
+      "features": {
+        "0": "RESTful Architecture",
+        "1": "Authentication & Security",
+        "2": "Documentation",
+        "3": "Scalability"
+      }
+    },
+    "contactMe": "Contact Me",
+    "keyFeatures": "Key Features"
   }
 }

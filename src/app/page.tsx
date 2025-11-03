@@ -1,5 +1,6 @@
 import Hero from "../components/Hero";
 import About from "../components/About";
+import Services from "../components/Services";
 import Projects from "../components/Projects";
 import Contact from "../components/Contact";
 import AuroraGradientBackground from "../components/AuroraGradientBackground";
@@ -10,6 +11,7 @@ export default function Home() {
       <AuroraGradientBackground />
       <Hero />
       <About />
+      <Services />
       <Projects />
       <Contact />
     </main>
