@@ -21,7 +21,38 @@
   },
   "about": {
     "title": "Giới thiệu về tôi",
-    "content": "Tôi là một nhà phát triển front-end đam mê với kinh nghiệm trong React, Next.js và Three.js. Tôi yêu thích việc tạo ra các trang web tương tác và hấp dẫn về mặt thị giác. [Thêm giáo dục, kỹ năng, kinh nghiệm của bạn ở đây.]"
+    "sections": {
+      "whoAmI": "Tôi là ai",
+      "goals": "Mục tiêu"
+    },
+    "whoAmI": "Tôi là một nhà phát triển frontend đam mê, chuyên tạo ra các giao diện người dùng đáp ứng, tương tác và sạch sẽ. Với nền tảng vững chắc trong ngành Kỹ thuật Thông tin, tôi kết hợp khả năng thẩm mỹ với chuyên môn kỹ thuật để xây dựng những trải nghiệm số xuất sắc.",
+    "goals": "Mục tiêu của tôi là liên tục nâng cao kỹ năng và đóng góp vào các dự án đổi mới tạo tác động tích cực đến cuộc sống của người dùng. Tôi cam kết cập nhật các công nghệ và thực tiễn tốt nhất trong phát triển web.",
+    "personalInfo": {
+      "title": "Thông tin cá nhân",
+      "labels": {
+        "name": "Tên",
+        "dateOfBirth": "Ngày sinh",
+        "placeOfBirth": "Nơi sinh",
+        "email": "Email",
+        "phone": "Số điện thoại",
+        "education": "Học vấn",
+        "workExperience": "Kinh nghiệm làm việc"
+      },
+      "name": "Nguyễn Tiến Phát",
+      "dateOfBirth": "29 tháng 10, 2003",
+      "placeOfBirth": "Thành phố Hồ Chí Minh, Việt Nam",
+      "email": {
+        "personal": "tienphat29102003@gmail.com",
+        "work": "tienphat.work29@gmail.com",
+        "labels": {
+          "personal": "Cá nhân",
+          "work": "Công việc"
+        }
+      },
+      "phone": "+84 376 549 230",
+      "education": "Cử nhân Kỹ thuật Phần mềm",
+      "workExperience": "<1 năm"
+    }
   },
   "projects": {
     "title": "Dự án",

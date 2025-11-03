@@ -21,7 +21,38 @@
   },
   "about": {
     "title": "About Me",
-    "content": "I am a passionate front-end developer with experience in React, Next.js, and Three.js. I love creating interactive and visually appealing websites. [Add your education, skills, experience here.]"
+    "sections": {
+      "whoAmI": "Who am I",
+      "goals": "Goals"
+    },
+    "whoAmI": "I'm a passionate frontend developer specializing in creating responsive, interactive, and clean user interfaces. With a strong background in Informatics Engineering, I combine design sensibility with technical expertise to build exceptional digital experiences.",
+    "goals": "My goal is to continuously enhance my skills and contribute to innovative projects that positively impact users' lives. I am committed to staying current with the latest technologies and best practices in web development.",
+    "personalInfo": {
+      "title": "Personal Info",
+      "labels": {
+        "name": "Name",
+        "dateOfBirth": "Date of Birth",
+        "placeOfBirth": "Place of Birth",
+        "email": "Email",
+        "phone": "Phone",
+        "education": "Education",
+        "workExperience": "Work Experience"
+      },
+      "name": "Nguyen Tien Phat",
+      "dateOfBirth": "October 29, 2003",
+      "placeOfBirth": "Ho Chi Minh City, Vietnam",
+      "email": {
+        "personal": "tienphat29102003@gmail.com",
+        "work": "tienphat.work29@gmail.com",
+        "labels": {
+          "personal": "Personal",
+          "work": "Work"
+        }
+      },
+      "phone": "+84 376 549 230",
+      "education": "Bachelor of Software Engineering",
+      "workExperience": "<1 year"
+    }
   },
   "projects": {
     "title": "Projects",
