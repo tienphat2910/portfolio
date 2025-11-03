@@ -96,14 +96,14 @@ const Services: React.FC = () => {
                 {/* Content */}
                 <div className="relative z-10">
                   <h3
-                    className="text-xl sm:text-2xl font-bold mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300"
+                    className="text-xl sm:text-2xl font-bold mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 text-white"
                     style={{ color: "inherit" }}
                   >
                     {t(`services.${service.key}.title`)}
                   </h3>
 
                   <p
-                    className="mb-6 leading-relaxed"
+                    className="mb-6 leading-relaxed text-white"
                     style={{ color: "inherit" }}
                   >
                     {t(`services.${service.key}.description`)}
