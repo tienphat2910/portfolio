@@ -39,6 +39,8 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -49,6 +51,15 @@ body {
   line-height: 1.6;
   transition: background-color 0.3s ease, color 0.3s ease;
   overflow-x: hidden;
+  max-width: 100vw;
+  position: relative;
+}
+header {
+  position: fixed;
+  inset: 0 auto auto 0;
+  width: 100%;
+  max-width: 100vw;
+  overflow: visible; /* Cho phép dropdown hiển thị */
 }
 
 /* Custom scrollbar */

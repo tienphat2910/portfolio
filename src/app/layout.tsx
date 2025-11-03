@@ -30,7 +30,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden 
+    min-h-screen 
+    bg-background 
+    text-foreground`}
         suppressHydrationWarning={true}
       >
         <ThemeProvider>

@@ -123,9 +123,10 @@ const Header: React.FC = () => {
   return (
     <header
       ref={headerRef}
-      className="fixed top-0 w-full z-50 transition-all duration-300"
+      className="fixed top-0 left-0 w-full z-50 transition-all duration-300"
       style={{
         backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
         borderBottom: "1px solid rgba(var(--border-rgb), 0.1)"
       }}
     >
@@ -172,13 +173,19 @@ const Header: React.FC = () => {
             ))}
           </nav>
 
-          {/* Controls */}
+          {/* Right Side Controls */}
           <div className="flex items-center space-x-3">
-            {/* Theme Toggle */}
-            <ThemeToggle />
+            {/* Desktop Controls */}
+            <div className="hidden md:flex items-center space-x-3">
+              <ThemeToggle />
+              <LanguageDropdown />
+            </div>
 
-            {/* Language Dropdown */}
-            <LanguageDropdown />
+            {/* Mobile Controls - Always visible on mobile */}
+            <div className="flex md:hidden items-center space-x-2">
+              <ThemeToggle />
+              <LanguageDropdown />
+            </div>
 
             {/* Mobile Menu Button */}
             <button
