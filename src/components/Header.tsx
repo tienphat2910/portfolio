@@ -148,6 +148,7 @@ const Header: React.FC = () => {
             {[
               { key: "nav.home", id: "home" },
               { key: "nav.about", id: "about" },
+              { key: "nav.services", id: "services" },
               { key: "nav.projects", id: "projects" },
               { key: "nav.contact", id: "contact" }
             ].map((item, index) => (
@@ -235,6 +236,7 @@ const Header: React.FC = () => {
             {[
               { key: "nav.home", id: "home" },
               { key: "nav.about", id: "about" },
+              { key: "nav.services", id: "services" },
               { key: "nav.projects", id: "projects" },
               { key: "nav.contact", id: "contact" }
             ].map((item) => (

@@ -59,7 +59,10 @@ const Services: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
+          <h2
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 text-gray-900 dark:text-white"
+            style={{ color: "inherit" }}
+          >
             {t("services.title")}
           </h2>
           <div className="w-24 h-1 bg-blue-600 mx-auto mb-8"></div>
@@ -92,17 +95,26 @@ const Services: React.FC = () => {
 
                 {/* Content */}
                 <div className="relative z-10">
-                  <h3 className="text-xl sm:text-2xl font-bold mb-4 text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                  <h3
+                    className="text-xl sm:text-2xl font-bold mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300"
+                    style={{ color: "inherit" }}
+                  >
                     {t(`services.${service.key}.title`)}
                   </h3>
 
-                  <p className="mb-6 leading-relaxed text-gray-600 dark:text-gray-300">
+                  <p
+                    className="mb-6 leading-relaxed"
+                    style={{ color: "inherit" }}
+                  >
                     {t(`services.${service.key}.description`)}
                   </p>
 
                   {/* Key Features */}
                   <div className="mb-6">
-                    <h4 className="font-semibold mb-4 text-gray-800 dark:text-white">
+                    <h4
+                      className="font-semibold mb-4"
+                      style={{ color: "inherit" }}
+                    >
                       {t("services.keyFeatures")}
                     </h4>
                     <div className="flex flex-wrap gap-3">
@@ -119,7 +131,10 @@ const Services: React.FC = () => {
                           className="group/feature relative flex items-center gap-2 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-full hover:bg-green-50 dark:hover:bg-green-900/20 transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-md"
                         >
                           <i className="bx bx-check text-green-500 text-sm"></i>
-                          <span className="text-sm font-medium text-gray-700 dark:text-white group-hover/feature:text-green-600 dark:group-hover/feature:text-gray-400 transition-colors duration-300">
+                          <span
+                            className="text-sm font-medium group-hover/feature:text-green-600 dark:group-hover/feature:text-gray-400 transition-colors duration-300"
+                            style={{ color: "inherit" }}
+                          >
                             {feature}
                           </span>
                         </motion.div>
