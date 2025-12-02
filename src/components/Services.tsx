@@ -1,11 +1,11 @@
 "use client";
 
-import { useLanguage } from "../contexts/LanguageContext";
+import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { useRef } from "react";
 
 const Services: React.FC = () => {
-  const { t } = useLanguage();
+  const t = useTranslations();
   const servicesRef = useRef<HTMLDivElement>(null);
 
   const getFeatures = (key: string) => {

@@ -1,11 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "../contexts/ThemeContext";
-import { LanguageProvider } from "../contexts/LanguageContext";
-import Header from "../components/Header";
-import "boxicons/css/boxicons.min.css";
-import "devicon/devicon.min.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,8 +13,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "Personal portfolio website"
+  title: "Portfolio - Phat Nguyen",
+  description: "Personal portfolio website showcasing projects and skills",
+  keywords: ["portfolio", "web development", "projects", "skills"],
+  authors: [{ name: "Phat Nguyen" }],
+  openGraph: {
+    title: "Portfolio - Phat Nguyen",
+    description: "Personal portfolio website showcasing projects and skills",
+    url: "https://yourportfolio.vercel.app",
+    siteName: "Portfolio",
+    type: "website"
+  },
+  icons: {
+    icon: "/favicon.ico"
+  }
 };
 
 export default function RootLayout({
@@ -27,22 +34,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden 
-    min-h-screen 
-    bg-background 
-    text-foreground`}
-        suppressHydrationWarning={true}
-      >
-        <ThemeProvider>
-          <LanguageProvider>
-            <Header />
-            {children}
-          </LanguageProvider>
-        </ThemeProvider>
-      </body>
-    </html>
-  );
+  return children;
 }

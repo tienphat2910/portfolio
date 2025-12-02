@@ -1,19 +1,5 @@
-import Hero from "../components/Hero";
-import About from "../components/About";
-import Services from "../components/Services";
-import Projects from "../components/Projects";
-import Contact from "../components/Contact";
-import AuroraGradientBackground from "../components/AuroraGradientBackground";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return (
-    <main className="pt-16 relative">
-      <AuroraGradientBackground />
-      <Hero />
-      <About />
-      <Services />
-      <Projects />
-      <Contact />
-    </main>
-  );
+export default function RootPage() {
+  redirect("/en");
 }

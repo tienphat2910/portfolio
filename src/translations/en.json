@@ -57,29 +57,52 @@
   },
   "projects": {
     "title": "Projects",
-    "project1": {
-      "name": "Project One",
-      "description": "A description of the first project."
-    },
-    "project2": {
-      "name": "Project Two",
-      "description": "A description of the second project."
-    },
-    "project3": {
-      "name": "Project Three",
-      "description": "A description of the third project."
-    },
-    "project4": {
-      "name": "Project Four",
-      "description": "A description of the fourth project."
-    }
+    "subtitle": "Here are some of my recent projects that showcase my skills and passion for development."
   },
   "contact": {
     "title": "Contact Me",
-    "name": "Name",
-    "email": "Email",
-    "message": "Message",
-    "send": "Send"
+    "getInTouch": "Get In Touch",
+    "description": "I'm always interested in new opportunities and exciting projects. Whether you have a question or just want to say hi, feel free to reach out!",
+    "successMessage": "Thank you for your message! I'll get back to you soon.",
+    "info": {
+      "email": {
+        "label": "Email",
+        "personal": "Personal",
+        "work": "Work"
+      },
+      "phone": {
+        "label": "Phone"
+      },
+      "location": {
+        "label": "Location"
+      }
+    },
+    "form": {
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "Nguyen Van A",
+      "email": "Email",
+      "emailPlaceholder": "example@gmail.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+84 123 456 789",
+      "service": "Service",
+      "selectService": "Select a service",
+      "recruitment": "Recruitment Contact",
+      "message": "Message",
+      "messagePlaceholder": "Tell me about your project...",
+      "send": "Send Message",
+      "sending": "Sending...",
+      "errors": {
+        "fullNameRequired": "Full name is required",
+        "fullNameInvalid": "Please enter a valid full name (at least first and last name)",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Please enter a valid email address",
+        "phoneRequired": "Phone number is required",
+        "phoneInvalid": "Please enter a valid phone number",
+        "serviceRequired": "Please select a service",
+        "messageRequired": "Message is required",
+        "messageMinLength": "Message must be at least 10 characters"
+      }
+    }
   },
   "services": {
     "title": "What I Do",

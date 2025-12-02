@@ -57,29 +57,52 @@
   },
   "projects": {
     "title": "Dự án",
-    "project1": {
-      "name": "Dự án Một",
-      "description": "Mô tả của dự án đầu tiên."
-    },
-    "project2": {
-      "name": "Dự án Hai",
-      "description": "Mô tả của dự án thứ hai."
-    },
-    "project3": {
-      "name": "Dự án Ba",
-      "description": "Mô tả của dự án thứ ba."
-    },
-    "project4": {
-      "name": "Dự án Bốn",
-      "description": "Mô tả của dự án thứ tư."
-    }
+    "subtitle": "Đây là một số dự án gần đây của tôi thể hiện kỹ năng và đam mê phát triển phần mềm."
   },
   "contact": {
     "title": "Liên hệ với tôi",
-    "name": "Tên",
-    "email": "Email",
-    "message": "Tin nhắn",
-    "send": "Gửi"
+    "getInTouch": "Liên hệ",
+    "description": "Tôi luôn quan tâm đến những cơ hội mới và các dự án thú vị. Dù bạn có câu hỏi hay chỉ muốn chào hỏi, hãy thoải mái liên hệ với tôi!",
+    "successMessage": "Cảm ơn tin nhắn của bạn! Tôi sẽ phản hồi sớm nhất có thể.",
+    "info": {
+      "email": {
+        "label": "Email",
+        "personal": "Cá nhân",
+        "work": "Công việc"
+      },
+      "phone": {
+        "label": "Số điện thoại"
+      },
+      "location": {
+        "label": "Địa chỉ"
+      }
+    },
+    "form": {
+      "fullName": "Họ và tên",
+      "fullNamePlaceholder": "Nguyễn Văn A",
+      "email": "Email",
+      "emailPlaceholder": "example@gmail.com",
+      "phone": "Số điện thoại",
+      "phonePlaceholder": "+84 123 456 789",
+      "service": "Dịch vụ",
+      "selectService": "Chọn dịch vụ",
+      "recruitment": "Liên hệ tuyển dụng",
+      "message": "Tin nhắn",
+      "messagePlaceholder": "Hãy cho tôi biết về dự án của bạn...",
+      "send": "Gửi tin nhắn",
+      "sending": "Đang gửi...",
+      "errors": {
+        "fullNameRequired": "Họ và tên không được để trống",
+        "fullNameInvalid": "Vui lòng nhập họ và tên hợp lệ (ít nhất có họ và tên)",
+        "emailRequired": "Email không được để trống",
+        "emailInvalid": "Vui lòng nhập địa chỉ email hợp lệ",
+        "phoneRequired": "Số điện thoại không được để trống",
+        "phoneInvalid": "Vui lòng nhập số điện thoại hợp lệ",
+        "serviceRequired": "Vui lòng chọn dịch vụ",
+        "messageRequired": "Tin nhắn không được để trống",
+        "messageMinLength": "Tin nhắn phải có ít nhất 10 ký tự"
+      }
+    }
   },
   "services": {
     "title": "Những gì tôi làm",

@@ -1,10 +1,10 @@
 "use client";
 
-import { useLanguage } from "../contexts/LanguageContext";
+import { useTranslations } from "next-intl";
 import { useGSAPAnimations } from "../hooks/useGSAPAnimations";
 
 const About: React.FC = () => {
-  const { t } = useLanguage();
+  const t = useTranslations();
   const { aboutRef } = useGSAPAnimations();
 
   const personalInfo = [

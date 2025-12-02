@@ -1,6 +1,6 @@
 "use client";
 
-import { useLanguage } from "../contexts/LanguageContext";
+import { useTranslations } from "next-intl";
 import { useTheme } from "../contexts/ThemeContext";
 import { useGSAPAnimations } from "../hooks/useGSAPAnimations";
 import TypingAnimation from "./TypingAnimation";
@@ -10,7 +10,7 @@ import ResumeButton from "./ResumeButton";
 import { Github, Facebook, Instagram, Linkedin } from "lucide-react";
 
 const Hero: React.FC = () => {
-  const { t, tArray } = useLanguage();
+  const t = useTranslations();
   const { theme } = useTheme();
   const { heroRef } = useGSAPAnimations();
 
@@ -48,7 +48,12 @@ const Hero: React.FC = () => {
               </h1>
               <div className="text-lg sm:text-xl lg:text-2xl">
                 <TypingAnimation
-                  texts={tArray("hero.typingTexts")}
+                  texts={[
+                    t("hero.typingTexts.0"),
+                    t("hero.typingTexts.1"),
+                    t("hero.typingTexts.2"),
+                    t("hero.typingTexts.3")
+                  ]}
                   typeSpeed={150}
                   deleteSpeed={100}
                   delayBetweenTexts={2000}

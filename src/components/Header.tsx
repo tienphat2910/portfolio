@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useTheme } from "../contexts/ThemeContext";
-import { useLanguage } from "../contexts/LanguageContext";
+import { useTranslations, useLocale } from "next-intl";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ThemeToggle from "./ThemeToggle";
@@ -12,7 +12,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
-  const { t } = useLanguage();
+  const t = useTranslations();
+  const locale = useLocale();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLHeadingElement>(null);

@@ -1,51 +1,136 @@
 "use client";
 
-import { useState } from "react";
-import { useLanguage } from "../contexts/LanguageContext";
+import React, { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useGSAPAnimations } from "../hooks/useGSAPAnimations";
+import { Mail, Phone, MapPin } from "lucide-react";
 
 const Contact: React.FC = () => {
-  const { t } = useLanguage();
+  const t = useTranslations();
   const { contactRef } = useGSAPAnimations();
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [form, setForm] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    service: "",
+    message: ""
+  });
+  const [errors, setErrors] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    service: "",
+    message: ""
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+
+    // Clear error when user starts typing
+    if (errors[name as keyof typeof errors]) {
+      setErrors({ ...errors, [name]: "" });
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {
+      fullName: "",
+      email: "",
+      phone: "",
+      service: "",
+      message: ""
+    };
+
+    // Validate full name
+    if (!form.fullName.trim()) {
+      newErrors.fullName = t("contact.form.errors.fullNameRequired");
+    } else if (
+      !/^[A-Za-zÀ-Ỹà-ỹĐđ]+(?:\s+[A-Za-zÀ-Ỹà-ỹĐđ]+)+$/.test(form.fullName.trim())
+    ) {
+      newErrors.fullName = t("contact.form.errors.fullNameInvalid");
+    }
+
+    // Validate email
+    if (!form.email.trim()) {
+      newErrors.email = t("contact.form.errors.emailRequired");
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      newErrors.email = t("contact.form.errors.emailInvalid");
+    }
+
+    // Validate phone
+    if (!form.phone.trim()) {
+      newErrors.phone = t("contact.form.errors.phoneRequired");
+    } else if (!/^(0|\+84)[3|5|7|8|9][0-9]{8}$/.test(form.phone.trim())) {
+      newErrors.phone = t("contact.form.errors.phoneInvalid");
+    }
+
+    // Validate service
+    if (!form.service) {
+      newErrors.service = t("contact.form.errors.serviceRequired");
+    }
+
+    // Validate message
+    if (!form.message.trim()) {
+      newErrors.message = t("contact.form.errors.messageRequired");
+    } else if (form.message.trim().length < 10) {
+      newErrors.message = t("contact.form.errors.messageMinLength");
+    }
+
+    setErrors(newErrors);
+    return !Object.values(newErrors).some((error) => error !== "");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
     setIsSubmitting(true);
 
     // Simulate form submission
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    alert("Thank you for your message! I'll get back to you soon.");
-    setForm({ name: "", email: "", message: "" });
+    alert(t("contact.successMessage"));
+    setForm({ fullName: "", email: "", phone: "", service: "", message: "" });
+    setErrors({ fullName: "", email: "", phone: "", service: "", message: "" });
     setIsSubmitting(false);
   };
 
   const contactInfo = [
     {
-      icon: "📧",
-      label: "Email",
-      value: "your.email@example.com",
-      href: "mailto:your.email@example.com"
+      icon: Mail,
+      label: t("contact.info.email.label"),
+      items: [
+        {
+          label: t("contact.info.email.personal"),
+          value: "tienphat29102003@gmail.com",
+          href: "mailto:tienphat29102003@gmail.com"
+        },
+        {
+          label: t("contact.info.email.work"),
+          value: "tienphat.work29@gmail.com",
+          href: "mailto:tienphat.work29@gmail.com"
+        }
+      ]
     },
     {
-      icon: "📱",
-      label: "Phone",
-      value: "+1 (555) 123-4567",
-      href: "tel:+15551234567"
+      icon: Phone,
+      label: t("contact.info.phone.label"),
+      value: "+84 376 549 230",
+      href: "tel:+84376549230"
     },
     {
-      icon: "📍",
-      label: "Location",
-      value: "Your City, Country",
-      href: "#"
+      icon: MapPin,
+      label: t("contact.info.location.label"),
+      value: "Ho Chi Minh City, Vietnam"
     }
   ];
 
@@ -77,97 +162,195 @@ const Contact: React.FC = () => {
                 className="text-2xl font-semibold mb-6"
                 style={{ color: "var(--foreground)" }}
               >
-                Get In Touch
+                {t("contact.getInTouch")}
               </h3>
-              <p
-                className="mb-8 leading-relaxed"
-                style={{ color: "var(--foreground)" }}
-              >
-                I'm always interested in new opportunities and exciting
-                projects. Whether you have a question or just want to say hi,
-                feel free to reach out!
+              <p className="mb-8 leading-relaxed text-gray-600 dark:text-gray-400">
+                {t("contact.description")}
               </p>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-6">
               {contactInfo.map((info, index) => (
-                <a
+                <div
                   key={index}
-                  href={info.href}
-                  className="flex items-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 group contact-item"
+                  className="flex items-start p-5 bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 contact-item border border-gray-100 dark:border-gray-700"
                 >
-                  <span className="text-2xl mr-4 group-hover:scale-110 transition-transform duration-200">
-                    {info.icon}
-                  </span>
-                  <div>
-                    <div className="font-medium text-gray-900 dark:text-white">
+                  <div className="shrink-0 w-12 h-12 flex items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400">
+                    <info.icon className="w-6 h-6" />
+                  </div>
+                  <div className="ml-4 flex-1">
+                    <div className="font-semibold text-gray-900 dark:text-white mb-1">
                       {info.label}
                     </div>
-                    <div className="text-gray-600 dark:text-gray-400">
-                      {info.value}
-                    </div>
+                    {info.items ? (
+                      <div className="space-y-1">
+                        {info.items.map((item, idx) => (
+                          <a
+                            key={idx}
+                            href={item.href}
+                            className="block text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                          >
+                            <span className="font-medium">{item.label}:</span>{" "}
+                            {item.value}
+                          </a>
+                        ))}
+                      </div>
+                    ) : info.href ? (
+                      <a
+                        href={info.href}
+                        className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                      >
+                        {info.value}
+                      </a>
+                    ) : (
+                      <div className="text-gray-600 dark:text-gray-400">
+                        {info.value}
+                      </div>
+                    )}
                   </div>
-                </a>
+                </div>
               ))}
             </div>
           </div>
 
           {/* Contact Form */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 sm:p-8 contact-form">
-            <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 sm:p-8 contact-form border border-gray-100 dark:border-gray-700">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  {t("contact.name")}
+                  {t("contact.form.fullName")}
+                  <span className="text-red-500 ml-1">*</span>
                 </label>
                 <input
                   type="text"
-                  name="name"
-                  value={form.name}
+                  name="fullName"
+                  value={form.fullName}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
-                  placeholder="Your name"
-                  required
+                  className={`w-full px-4 py-3 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 ${
+                    errors.fullName
+                      ? "border-red-500 dark:border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
+                  }`}
+                  placeholder={t("contact.form.fullNamePlaceholder")}
                 />
+                {errors.fullName && (
+                  <p className="mt-1 text-sm text-red-500">{errors.fullName}</p>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    {t("contact.form.email")}
+                    <span className="text-red-500 ml-1">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 ${
+                      errors.email
+                        ? "border-red-500 dark:border-red-500"
+                        : "border-gray-300 dark:border-gray-600"
+                    }`}
+                    placeholder={t("contact.form.emailPlaceholder")}
+                  />
+                  {errors.email && (
+                    <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    {t("contact.form.phone")}
+                    <span className="text-red-500 ml-1">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={form.phone}
+                    onChange={handleChange}
+                    className={`w-full px-4 py-3 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 ${
+                      errors.phone
+                        ? "border-red-500 dark:border-red-500"
+                        : "border-gray-300 dark:border-gray-600"
+                    }`}
+                    placeholder={t("contact.form.phonePlaceholder")}
+                  />
+                  {errors.phone && (
+                    <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
+                  )}
+                </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  {t("contact.email")}
+                  {t("contact.form.service")}
+                  <span className="text-red-500 ml-1">*</span>
                 </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={form.email}
+                <select
+                  name="service"
+                  value={form.service}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
-                  placeholder="your.email@example.com"
-                  required
-                />
+                  className={`w-full px-4 py-3 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 ${
+                    errors.service
+                      ? "border-red-500 dark:border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
+                  }`}
+                >
+                  <option value="">{t("contact.form.selectService")}</option>
+                  <option value="webDevelopment">
+                    {t("services.webDevelopment.title")}
+                  </option>
+                  <option value="ecommerce">
+                    {t("services.ecommerce.title")}
+                  </option>
+                  <option value="mobileDevelopment">
+                    {t("services.mobileDevelopment.title")}
+                  </option>
+                  <option value="apiDevelopment">
+                    {t("services.apiDevelopment.title")}
+                  </option>
+                  <option value="recruitment">
+                    {t("contact.form.recruitment")}
+                  </option>
+                </select>
+                {errors.service && (
+                  <p className="mt-1 text-sm text-red-500">{errors.service}</p>
+                )}
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  {t("contact.message")}
+                  {t("contact.form.message")}
+                  <span className="text-red-500 ml-1">*</span>
                 </label>
                 <textarea
                   name="message"
                   value={form.message}
                   onChange={handleChange}
                   rows={5}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 resize-none"
-                  placeholder="Your message..."
-                  required
+                  className={`w-full px-4 py-3 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 resize-none ${
+                    errors.message
+                      ? "border-red-500 dark:border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
+                  }`}
+                  placeholder={t("contact.form.messagePlaceholder")}
                 />
+                {errors.message && (
+                  <p className="mt-1 text-sm text-red-500">{errors.message}</p>
+                )}
               </div>
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2"
+                className="w-full bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-blue-400 disabled:to-purple-400 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2 shadow-md hover:shadow-lg"
               >
                 {isSubmitting ? (
                   <>
-                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
                       <circle
                         className="opacity-25"
                         cx="12"
@@ -183,10 +366,10 @@ const Contact: React.FC = () => {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       ></path>
                     </svg>
-                    <span>Sending...</span>
+                    <span>{t("contact.form.sending")}</span>
                   </>
                 ) : (
-                  <span>{t("contact.send")}</span>
+                  <span>{t("contact.form.send")}</span>
                 )}
               </button>
             </form>

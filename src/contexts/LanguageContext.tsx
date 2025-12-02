@@ -1,19 +1,15 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
-import en from "../translations/en.json";
-import vi from "../translations/vi.json";
+import { createContext, useContext } from "react";
+import { useLocale } from "next-intl";
+import { useRouter, usePathname } from "next/navigation";
 
 type Language = "en" | "vi";
 
 interface LanguageContextType {
   language: Language;
   toggleLanguage: () => void;
-  t: (key: string) => string;
-  tArray: (key: string) => string[];
 }
-
-const translations = { en, vi };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined
@@ -22,45 +18,19 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
   children
 }) => {
-  const [language, setLanguage] = useState<Language>("en");
-
-  useEffect(() => {
-    // Load language from localStorage
-    const savedLang = localStorage.getItem("language") as Language;
-    if (savedLang) {
-      setLanguage(savedLang);
-    }
-  }, []);
-
-  useEffect(() => {
-    // Save to localStorage
-    localStorage.setItem("language", language);
-  }, [language]);
+  const locale = useLocale() as Language;
+  const router = useRouter();
+  const pathname = usePathname();
 
   const toggleLanguage = () => {
-    setLanguage((prev) => (prev === "en" ? "vi" : "en"));
-  };
-
-  const t = (key: string): string => {
-    const keys = key.split(".");
-    let value: any = translations[language];
-    for (const k of keys) {
-      value = value?.[k];
-    }
-    return value || key;
-  };
-
-  const tArray = (key: string): string[] => {
-    const keys = key.split(".");
-    let value: any = translations[language];
-    for (const k of keys) {
-      value = value?.[k];
-    }
-    return Array.isArray(value) ? value : [];
+    const newLocale = locale === "en" ? "vi" : "en";
+    // Replace current locale in pathname with new locale
+    const newPathname = pathname.replace(`/${locale}`, `/${newLocale}`);
+    router.push(newPathname);
   };
 
   return (
-    <LanguageContext.Provider value={{ language, toggleLanguage, t, tArray }}>
+    <LanguageContext.Provider value={{ language: locale, toggleLanguage }}>
       {children}
     </LanguageContext.Provider>
   );
