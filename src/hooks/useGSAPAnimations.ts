@@ -195,55 +195,68 @@ export const useGSAPAnimations = () => {
 
     // Contact animations
     if (contactRef.current) {
-      gsap.fromTo(
-        contactRef.current.querySelector("h2"),
-        { y: 50, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: contactRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse"
+      const ctx = gsap.context(() => {
+        // Title animation
+        gsap.fromTo(
+          "h2",
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: contactRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse"
+            }
           }
-        }
-      );
+        );
 
-      const contactItems = contactRef.current.querySelectorAll(".contact-item");
-      gsap.fromTo(
-        contactItems,
-        { x: -50, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: "power3.out",
-          stagger: 0.2,
-          scrollTrigger: {
-            trigger: contactRef.current,
-            start: "top 70%",
-            toggleActions: "play none none reverse"
-          }
+        // Contact items - stagger from bottom
+        const contactItems =
+          contactRef.current?.querySelectorAll(".contact-item");
+        if (contactItems) {
+          gsap.fromTo(
+            contactItems,
+            { y: 30, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.6,
+              ease: "power3.out",
+              stagger: 0.15,
+              scrollTrigger: {
+                trigger: contactRef.current,
+                start: "top 75%",
+                toggleActions: "play none none reverse"
+              }
+            }
+          );
         }
-      );
 
-      gsap.fromTo(
-        contactRef.current.querySelector(".contact-form"),
-        { x: 50, opacity: 0 },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: contactRef.current,
-            start: "top 70%",
-            toggleActions: "play none none reverse"
-          }
+        // Contact form - fade in from bottom
+        const contactForm = contactRef.current?.querySelector(".contact-form");
+        if (contactForm) {
+          gsap.fromTo(
+            contactForm,
+            { y: 30, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: contactRef.current,
+                start: "top 75%",
+                toggleActions: "play none none reverse"
+              }
+            }
+          );
         }
-      );
+      }, contactRef);
+
+      return () => ctx.revert();
     }
 
     // Parallax effect for gradient background

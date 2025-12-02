@@ -212,7 +212,14 @@ const Footer: React.FC = () => {
               {t("footer.madeWith")}{" "}
               <Heart className="w-4 h-4 text-red-500 fill-red-500 animate-pulse" />{" "}
               {t("footer.by")}{" "}
-              <span className="font-semibold text-foreground">Phat Nguyen</span>
+              <a
+                href="https://phatnguyen.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-foreground hover:text-emerald-600 dark:hover:text-teal-400 transition-colors duration-300 hover:underline"
+              >
+                Phat Nguyen
+              </a>
             </span>
           </p>
 
