@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useTranslations } from "next-intl";
+import { useTheme } from "../contexts/ThemeContext";
 import {
   Mail,
   Phone,
@@ -15,6 +16,7 @@ import {
 
 const Footer: React.FC = () => {
   const t = useTranslations();
+  const { theme } = useTheme();
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -82,15 +84,23 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="relative bg-gradient-to-br from-background via-background to-muted border-t border-border/40">
+    <footer className="relative bg-linear-to-br from-background via-background to-muted border-t border-border/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
         <div className="py-8 md:py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {/* Brand Section */}
           <div className="lg:col-span-1">
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent mb-4">
-              Phat Nguyen
-            </h3>
+            <div className="mb-4">
+              <img
+                src={
+                  theme === "dark"
+                    ? "/images/dark-logo.png"
+                    : "/images/light-logo.png"
+                }
+                alt="Phat Nguyen Logo"
+                className="h-12 w-auto"
+              />
+            </div>
             <p className="text-muted-foreground text-sm leading-relaxed mb-6">
               {t("footer.description")}
             </p>
@@ -181,7 +191,7 @@ const Footer: React.FC = () => {
                       href={info.href}
                       className="flex items-start gap-3 text-muted-foreground hover:text-foreground transition-colors duration-300 group"
                     >
-                      <Icon className="w-5 h-5 mt-0.5 flex-shrink-0 group-hover:text-primary transition-colors" />
+                      <Icon className="w-5 h-5 mt-0.5 shrink-0 group-hover:text-primary transition-colors" />
                       <span className="text-sm">{info.text}</span>
                     </a>
                   </li>
@@ -218,7 +228,7 @@ const Footer: React.FC = () => {
       </div>
 
       {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
+      <div className="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-primary/50 to-transparent"></div>
       <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10"></div>
       <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl -z-10"></div>
     </footer>

@@ -179,7 +179,14 @@ const Header: React.FC = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const offset = 80; // Header height offset
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
     }
     setIsMenuOpen(false);
   };
@@ -255,13 +262,21 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <div className="flex items-center">
-            <h1
+            <div
               ref={logoRef}
-              className="text-2xl font-bold bg-linear-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent cursor-pointer hover:scale-105 transition-transform duration-300"
+              className="cursor-pointer hover:scale-105 transition-transform duration-300"
               onClick={() => scrollToSection("home")}
             >
-              Phat Nguyen
-            </h1>
+              <img
+                src={
+                  theme === "dark"
+                    ? "/images/dark-logo.png"
+                    : "/images/light-logo.png"
+                }
+                alt="Phat Nguyen Logo"
+                className="h-12 w-auto"
+              />
+            </div>
           </div>
 
           {/* Desktop Navigation */}

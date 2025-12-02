@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://yourportfolio.vercel.app"; // Thay bằng domain thật khi deploy
+  const baseUrl = "https://phatnguyen.vercel.app";
   const locales = ["en", "vi"];
 
   const sitemapEntries: MetadataRoute.Sitemap = [];
