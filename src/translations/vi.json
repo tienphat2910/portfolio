@@ -64,6 +64,7 @@
     "getInTouch": "Liên hệ",
     "description": "Tôi luôn quan tâm đến những cơ hội mới và các dự án thú vị. Dù bạn có câu hỏi hay chỉ muốn chào hỏi, hãy thoải mái liên hệ với tôi!",
     "successMessage": "Cảm ơn tin nhắn của bạn! Tôi sẽ phản hồi sớm nhất có thể.",
+    "errorMessage": "Rất tiếc! Đã có lỗi xảy ra. Vui lòng thử lại sau.",
     "info": {
       "email": {
         "label": "Email",
@@ -148,5 +149,14 @@
     },
     "contactMe": "Liên hệ với tôi",
     "keyFeatures": "Tính năng chính"
+  },
+  "footer": {
+    "description": "Lập trình viên Frontend đam mê tạo ra những trải nghiệm web đẹp mắt và chức năng với công nghệ hiện đại.",
+    "quickLinks": "Liên kết nhanh",
+    "services": "Dịch vụ",
+    "contactInfo": "Thông tin liên hệ",
+    "copyright": "© {year} Phat Nguyen. Bản quyền thuộc về.",
+    "madeWith": "Được làm với",
+    "by": "bởi"
   }
 }

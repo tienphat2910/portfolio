@@ -16,6 +16,7 @@
     "@intlayer/sync-json-plugin": "^7.3.5",
     "@react-three/drei": "^10.7.6",
     "@react-three/fiber": "^9.4.0",
+    "@types/nodemailer": "^7.0.4",
     "boxicons": "^2.1.4",
     "devicon": "^2.17.0",
     "framer-motion": "^12.23.24",
@@ -24,8 +25,10 @@
     "lucide-react": "^0.552.0",
     "next": "16.0.1",
     "next-intl": "^4.5.7",
+    "nodemailer": "^7.0.11",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "react-hot-toast": "^2.6.0",
     "three": "^0.181.0"
   },
   "devDependencies": {

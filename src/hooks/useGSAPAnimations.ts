@@ -18,32 +18,54 @@ export const useGSAPAnimations = () => {
   useEffect(() => {
     // Hero animations
     if (heroRef.current) {
-      const heroTl = gsap.timeline();
+      const ctx = gsap.context(() => {
+        const heroTl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      heroTl
-        .fromTo(
-          heroRef.current.querySelector("h1"),
-          { y: 50, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1, ease: "power3.out" }
-        )
-        .fromTo(
-          heroRef.current.querySelector("h2"),
-          { y: 30, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
-          "-=0.5"
-        )
-        .fromTo(
-          heroRef.current.querySelector("p"),
-          { y: 20, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
-          "-=0.3"
-        )
-        .fromTo(
-          heroRef.current.querySelector("a"),
-          { y: 20, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" },
-          "-=0.2"
-        );
+        heroTl
+          .fromTo(
+            "h1",
+            { y: 50, opacity: 0 },
+            { y: 0, opacity: 1, duration: 1 }
+          )
+          .fromTo(
+            ".typing-animation-container",
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8 },
+            "-=0.6"
+          )
+          .fromTo(
+            ".hero-description",
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8 },
+            "-=0.5"
+          )
+          .fromTo(
+            ".tech-stack-item",
+            { y: 20, opacity: 0, scale: 0.9 },
+            { y: 0, opacity: 1, scale: 1, duration: 0.6, stagger: 0.05 },
+            "-=0.4"
+          )
+          .fromTo(
+            ".hero-buttons",
+            { y: 20, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.6 },
+            "-=0.3"
+          )
+          .fromTo(
+            ".hero-social",
+            { y: 20, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.6 },
+            "-=0.2"
+          )
+          .fromTo(
+            ".hero-avatar",
+            { scale: 0.8, opacity: 0, rotation: -10 },
+            { scale: 1, opacity: 1, rotation: 0, duration: 1 },
+            "-=0.8"
+          );
+      }, heroRef);
+
+      return () => ctx.revert();
     }
 
     // About section animations

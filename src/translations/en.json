@@ -64,6 +64,7 @@
     "getInTouch": "Get In Touch",
     "description": "I'm always interested in new opportunities and exciting projects. Whether you have a question or just want to say hi, feel free to reach out!",
     "successMessage": "Thank you for your message! I'll get back to you soon.",
+    "errorMessage": "Oops! Something went wrong. Please try again later.",
     "info": {
       "email": {
         "label": "Email",
@@ -148,5 +149,14 @@
     },
     "contactMe": "Contact Me",
     "keyFeatures": "Key Features"
+  },
+  "footer": {
+    "description": "Passionate Frontend Developer creating beautiful and functional web experiences with modern technologies.",
+    "quickLinks": "Quick Links",
+    "services": "Services",
+    "contactInfo": "Contact Info",
+    "copyright": "© {year} Phat Nguyen. All rights reserved.",
+    "madeWith": "Made with",
+    "by": "by"
   }
 }

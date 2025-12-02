@@ -46,7 +46,7 @@ const Hero: React.FC = () => {
               >
                 {t("hero.greeting")}
               </h1>
-              <div className="text-lg sm:text-xl lg:text-2xl">
+              <div className="text-lg sm:text-xl lg:text-2xl typing-animation-container">
                 <TypingAnimation
                   texts={[
                     t("hero.typingTexts.0"),
@@ -62,7 +62,7 @@ const Hero: React.FC = () => {
             </div>
 
             {/* Description */}
-            <div className="space-y-4">
+            <div className="space-y-4 hero-description">
               <p
                 className="text-base sm:text-lg leading-relaxed max-w-2xl"
                 style={{ color: "var(--foreground)" }}
@@ -77,11 +77,10 @@ const Hero: React.FC = () => {
                 {techStack.map((tech, index) => (
                   <div
                     key={tech.name}
-                    className="group relative flex items-center gap-2 px-4 py-2 border rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-lg"
+                    className="tech-stack-item group relative flex items-center gap-2 px-4 py-2 border rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-lg"
                     style={{
                       backgroundColor: "var(--background)",
                       borderColor: "var(--foreground)",
-                      animationDelay: `${index * 0.1}s`,
                       opacity: 0.9
                     }}
                   >
@@ -117,13 +116,13 @@ const Hero: React.FC = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-row gap-4 justify-center lg:justify-start">
+            <div className="hero-buttons flex flex-row gap-4 justify-center lg:justify-start">
               <FancyButton href="#projects">{t("hero.hireMe")}</FancyButton>
               <ResumeButton href="/cv.pdf">{t("hero.resume")}</ResumeButton>
             </div>
 
             {/* Social Links */}
-            <div className="flex justify-center lg:justify-start space-x-4">
+            <div className="hero-social flex justify-center lg:justify-start space-x-4">
               <span
                 className="text-sm mr-2 self-center"
                 style={{ color: "var(--foreground)" }}
@@ -131,7 +130,7 @@ const Hero: React.FC = () => {
                 {t("hero.followMe")}
               </span>
               <a
-                href="https://github.com"
+                href="https://github.com/tienphat2910"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
@@ -140,7 +139,7 @@ const Hero: React.FC = () => {
                 <Github size={20} />
               </a>
               <a
-                href="https://facebook.com"
+                href="https://facebook.com/tien.phat29"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 hover:text-blue-600 transition-colors duration-200"
@@ -149,7 +148,7 @@ const Hero: React.FC = () => {
                 <Facebook size={20} />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/_imphat29_/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 hover:text-pink-600 transition-colors duration-200"
@@ -158,7 +157,7 @@ const Hero: React.FC = () => {
                 <Instagram size={20} />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/tienphat2910/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 hover:text-blue-700 transition-colors duration-200"
@@ -170,7 +169,7 @@ const Hero: React.FC = () => {
           </div>
 
           {/* Right Side - Avatar */}
-          <div className="relative flex justify-center items-center">
+          <div className="hero-avatar relative flex justify-center items-center">
             <div className="relative z-10">
               <img
                 src="/images/avt.jpg"

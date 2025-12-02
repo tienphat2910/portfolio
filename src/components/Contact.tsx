@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useGSAPAnimations } from "../hooks/useGSAPAnimations";
 import { Mail, Phone, MapPin } from "lucide-react";
+import toast from "react-hot-toast";
 
 const Contact: React.FC = () => {
   const t = useTranslations();
@@ -95,13 +96,49 @@ const Contact: React.FC = () => {
 
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      // Send email via API route
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          fullName: form.fullName,
+          email: form.email,
+          phone: form.phone,
+          service: form.service,
+          message: form.message
+        })
+      });
 
-    alert(t("contact.successMessage"));
-    setForm({ fullName: "", email: "", phone: "", service: "", message: "" });
-    setErrors({ fullName: "", email: "", phone: "", service: "", message: "" });
-    setIsSubmitting(false);
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        toast.success(t("contact.successMessage"));
+        setForm({
+          fullName: "",
+          email: "",
+          phone: "",
+          service: "",
+          message: ""
+        });
+        setErrors({
+          fullName: "",
+          email: "",
+          phone: "",
+          service: "",
+          message: ""
+        });
+      } else {
+        toast.error(t("contact.errorMessage"));
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error(t("contact.errorMessage"));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -346,7 +383,7 @@ const Contact: React.FC = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-blue-400 disabled:to-purple-400 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2 shadow-md hover:shadow-lg"
+                className="w-full bg-linear-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 disabled:from-emerald-400 disabled:to-teal-400 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2 shadow-md hover:shadow-lg hover:scale-[1.02] cursor-pointer disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
                   <>

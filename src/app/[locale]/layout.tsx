@@ -4,6 +4,7 @@ import { getMessages } from "next-intl/server";
 import { ThemeProvider } from "../../contexts/ThemeContext";
 import { LanguageProvider } from "../../contexts/LanguageContext";
 import Header from "../../components/Header";
+import { Toaster } from "react-hot-toast";
 import "boxicons/css/boxicons.min.css";
 import "devicon/devicon.min.css";
 
@@ -39,6 +40,29 @@ export default async function LocaleLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider>
             <LanguageProvider>
+              <Toaster
+                position="top-right"
+                toastOptions={{
+                  duration: 4000,
+                  style: {
+                    background: "var(--background)",
+                    color: "var(--foreground)",
+                    border: "1px solid var(--border-rgb, rgba(0, 0, 0, 0.1))"
+                  },
+                  success: {
+                    iconTheme: {
+                      primary: "#10b981",
+                      secondary: "#fff"
+                    }
+                  },
+                  error: {
+                    iconTheme: {
+                      primary: "#ef4444",
+                      secondary: "#fff"
+                    }
+                  }
+                }}
+              />
               <Header />
               {children}
             </LanguageProvider>
