@@ -7,12 +7,11 @@ import {
   Mail,
   Phone,
   MapPin,
-  Github,
-  Linkedin,
-  Facebook,
   Heart,
   ArrowUp
 } from "lucide-react";
+import { FaFacebook,   FaGithub,
+  FaLinkedin, } from "react-icons/fa";
 
 const Footer: React.FC = () => {
   const t = useTranslations();
@@ -39,19 +38,19 @@ const Footer: React.FC = () => {
   const socialLinks = [
     {
       name: "GitHub",
-      icon: Github,
+      icon: FaGithub,
       url: "https://github.com/tienphat2910",
       color: "hover:text-[#333] dark:hover:text-white"
     },
     {
       name: "LinkedIn",
-      icon: Linkedin,
+      icon: FaLinkedin,
       url: "https://www.linkedin.com/in/tienphat2910/",
       color: "hover:text-[#0077b5]"
     },
     {
       name: "Facebook",
-      icon: Facebook,
+      icon: FaFacebook,
       url: "https://www.facebook.com/tien.phat29/",
       color: "hover:text-[#1877f2]"
     }

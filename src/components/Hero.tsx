@@ -7,7 +7,12 @@ import TypingAnimation from "./TypingAnimation";
 import FloatingIcons from "./FloatingIcons";
 import FancyButton from "./FancyButton";
 import ResumeButton from "./ResumeButton";
-import { Github, Facebook, Instagram, Linkedin } from "lucide-react";
+import {
+  FaGithub,
+  FaLinkedin,
+  FaFacebook,
+  FaInstagram
+} from "react-icons/fa";
 
 const Hero: React.FC = () => {
   const t = useTranslations();
@@ -136,7 +141,7 @@ const Hero: React.FC = () => {
                 className="p-2 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
                 style={{ color: "var(--foreground)" }}
               >
-                <Github size={20} />
+                <FaGithub size={20} />
               </a>
               <a
                 href="https://facebook.com/tien.phat29"
@@ -145,7 +150,7 @@ const Hero: React.FC = () => {
                 className="p-2 hover:text-blue-600 transition-colors duration-200"
                 style={{ color: "var(--foreground)" }}
               >
-                <Facebook size={20} />
+                <FaFacebook size={20} />
               </a>
               <a
                 href="https://www.instagram.com/_imphat29_/"
@@ -154,7 +159,7 @@ const Hero: React.FC = () => {
                 className="p-2 hover:text-pink-600 transition-colors duration-200"
                 style={{ color: "var(--foreground)" }}
               >
-                <Instagram size={20} />
+                <FaInstagram size={20} />
               </a>
               <a
                 href="https://www.linkedin.com/in/tienphat2910/"
@@ -163,7 +168,7 @@ const Hero: React.FC = () => {
                 className="p-2 hover:text-blue-700 transition-colors duration-200"
                 style={{ color: "var(--foreground)" }}
               >
-                <Linkedin size={20} />
+                <FaLinkedin size={20} />
               </a>
             </div>
           </div>
