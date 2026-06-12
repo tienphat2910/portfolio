@@ -8,7 +8,6 @@ export default {
         "nav": {
           "home": "Home",
           "about": "About",
-          "services": "Services",
           "projects": "Projects",
           "contact": "Contact"
         },
@@ -91,9 +90,8 @@ export default {
             "emailPlaceholder": "example@gmail.com",
             "phone": "Phone",
             "phonePlaceholder": "+84 123 456 789",
-            "service": "Service",
-            "selectService": "Select a service",
-            "recruitment": "Recruitment Contact",
+            "subject": "Subject",
+            "subjectPlaceholder": "What is this about?",
             "message": "Message",
             "messagePlaceholder": "Tell me about your project...",
             "send": "Send Message",
@@ -105,61 +103,15 @@ export default {
               "emailInvalid": "Please enter a valid email address",
               "phoneRequired": "Phone number is required",
               "phoneInvalid": "Please enter a valid phone number",
-              "serviceRequired": "Please select a service",
+              "subjectRequired": "Subject is required",
               "messageRequired": "Message is required",
               "messageMinLength": "Message must be at least 10 characters"
             }
           }
         },
-        "services": {
-          "title": "What I Do",
-          "webDevelopment": {
-            "title": "Web Development",
-            "description": "Creating responsive, modern websites and web applications with cutting-edge technologies and best practices.",
-            "features": {
-              "0": "Responsive Design",
-              "1": "Performance Optimization",
-              "2": "SEO Friendly",
-              "3": "Cross-browser Compatibility"
-            }
-          },
-          "ecommerce": {
-            "title": "E-commerce Solutions",
-            "description": "Building comprehensive online stores with secure payment integration and user-friendly shopping experiences.",
-            "features": {
-              "0": "Payment Gateway Integration",
-              "1": "Inventory Management",
-              "2": "Order Tracking",
-              "3": "Customer Analytics"
-            }
-          },
-          "mobileDevelopment": {
-            "title": "Mobile Development",
-            "description": "Developing native and cross-platform mobile applications for iOS and Android devices.",
-            "features": {
-              "0": "Native Performance",
-              "1": "Cross-platform Support",
-              "2": "App Store Optimization",
-              "3": "Offline Functionality"
-            }
-          },
-          "apiDevelopment": {
-            "title": "API Development",
-            "description": "Designing and implementing robust RESTful APIs and microservices for scalable applications.",
-            "features": {
-              "0": "RESTful Architecture",
-              "1": "Authentication & Security",
-              "2": "Documentation",
-              "3": "Scalability"
-            }
-          },
-          "contactMe": "Contact Me",
-          "keyFeatures": "Key Features"
-        },
         "footer": {
           "description": "Passionate Frontend Developer creating beautiful and functional web experiences with modern technologies.",
           "quickLinks": "Quick Links",
-          "services": "Services",
           "contactInfo": "Contact Info",
           "copyright": "© {year} Phat Nguyen. All rights reserved.",
           "madeWith": "Made with",
@@ -170,7 +122,6 @@ export default {
         "nav": {
           "home": "Trang chủ",
           "about": "Giới thiệu",
-          "services": "Dịch vụ",
           "projects": "Dự án",
           "contact": "Liên hệ"
         },
@@ -253,9 +204,8 @@ export default {
             "emailPlaceholder": "example@gmail.com",
             "phone": "Số điện thoại",
             "phonePlaceholder": "+84 123 456 789",
-            "service": "Dịch vụ",
-            "selectService": "Chọn dịch vụ",
-            "recruitment": "Liên hệ tuyển dụng",
+            "subject": "Tiêu đề",
+            "subjectPlaceholder": "Tiêu đề tin nhắn là gì?",
             "message": "Tin nhắn",
             "messagePlaceholder": "Hãy cho tôi biết về dự án của bạn...",
             "send": "Gửi tin nhắn",
@@ -267,61 +217,15 @@ export default {
               "emailInvalid": "Vui lòng nhập địa chỉ email hợp lệ",
               "phoneRequired": "Số điện thoại không được để trống",
               "phoneInvalid": "Vui lòng nhập số điện thoại hợp lệ",
-              "serviceRequired": "Vui lòng chọn dịch vụ",
+              "subjectRequired": "Tiêu đề không được để trống",
               "messageRequired": "Tin nhắn không được để trống",
               "messageMinLength": "Tin nhắn phải có ít nhất 10 ký tự"
             }
           }
         },
-        "services": {
-          "title": "Những gì tôi làm",
-          "webDevelopment": {
-            "title": "Phát triển Web",
-            "description": "Tạo ra các trang web và ứng dụng web đáp ứng, hiện đại với công nghệ tiên tiến và các thực tiễn tốt nhất.",
-            "features": {
-              "0": "Thiết kế đáp ứng",
-              "1": "Tối ưu hóa hiệu suất",
-              "2": "Thân thiện với SEO",
-              "3": "Tương thích đa trình duyệt"
-            }
-          },
-          "ecommerce": {
-            "title": "Giải pháp Thương mại điện tử",
-            "description": "Xây dựng các cửa hàng trực tuyến toàn diện với tích hợp thanh toán an toàn và trải nghiệm mua sắm thân thiện với người dùng.",
-            "features": {
-              "0": "Tích hợp cổng thanh toán",
-              "1": "Quản lý hàng tồn kho",
-              "2": "Theo dõi đơn hàng",
-              "3": "Phân tích khách hàng"
-            }
-          },
-          "mobileDevelopment": {
-            "title": "Phát triển Ứng dụng Di động",
-            "description": "Phát triển các ứng dụng di động gốc và đa nền tảng cho thiết bị iOS và Android.",
-            "features": {
-              "0": "Hiệu suất gốc",
-              "1": "Hỗ trợ đa nền tảng",
-              "2": "Tối ưu hóa App Store",
-              "3": "Chức năng ngoại tuyến"
-            }
-          },
-          "apiDevelopment": {
-            "title": "Phát triển API",
-            "description": "Thiết kế và triển khai các API RESTful mạnh mẽ và microservices cho các ứng dụng có thể mở rộng.",
-            "features": {
-              "0": "Kiến trúc RESTful",
-              "1": "Xác thực & Bảo mật",
-              "2": "Tài liệu",
-              "3": "Khả năng mở rộng"
-            }
-          },
-          "contactMe": "Liên hệ với tôi",
-          "keyFeatures": "Tính năng chính"
-        },
         "footer": {
           "description": "Lập trình viên Frontend đam mê tạo ra những trải nghiệm web đẹp mắt và chức năng với công nghệ hiện đại.",
           "quickLinks": "Liên kết nhanh",
-          "services": "Dịch vụ",
           "contactInfo": "Thông tin liên hệ",
           "copyright": "© {year} Phat Nguyen. Bản quyền thuộc về.",
           "madeWith": "Được làm với",
@@ -331,7 +235,7 @@ export default {
     }
   },
   "localIds": [
-    "index::plugin::src\\translations\\en.json",
-    "index::plugin::src\\translations\\vi.json"
+    "index::sync-json::./src/translations/{{locale}}.json::src\\translations\\en.json",
+    "index::sync-json::./src/translations/{{locale}}.json::src\\translations\\vi.json"
   ]
 } as const;

@@ -1,39 +1,45 @@
 "use client";
 
 import React, { useState } from "react";
-import { useTranslations } from "next-intl";
-import { useGSAPAnimations } from "../hooks/useGSAPAnimations";
+import { useTranslations, useLocale } from "next-intl";
+import { motion } from "framer-motion";
 import { Mail, Phone, MapPin } from "lucide-react";
-import toast from "react-hot-toast";
+import { toast, Toaster } from "sonner";
+import { Profile } from "../lib/supabase/service";
 
-const Contact: React.FC = () => {
+interface ContactProps {
+  profile: Profile;
+}
+
+const Contact: React.FC<ContactProps> = ({ profile }) => {
   const t = useTranslations();
-  const { contactRef } = useGSAPAnimations();
+  const locale = useLocale();
+  const isVi = locale === "vi";
+
   const [form, setForm] = useState({
     fullName: "",
     email: "",
     phone: "",
-    service: "",
+    subject: "",
     message: ""
   });
   const [errors, setErrors] = useState({
     fullName: "",
     email: "",
     phone: "",
-    service: "",
+    subject: "",
     message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      HTMLInputElement | HTMLTextAreaElement
     >
   ) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
 
-    // Clear error when user starts typing
     if (errors[name as keyof typeof errors]) {
       setErrors({ ...errors, [name]: "" });
     }
@@ -44,11 +50,10 @@ const Contact: React.FC = () => {
       fullName: "",
       email: "",
       phone: "",
-      service: "",
+      subject: "",
       message: ""
     };
 
-    // Validate full name
     if (!form.fullName.trim()) {
       newErrors.fullName = t("contact.form.errors.fullNameRequired");
     } else if (
@@ -57,26 +62,22 @@ const Contact: React.FC = () => {
       newErrors.fullName = t("contact.form.errors.fullNameInvalid");
     }
 
-    // Validate email
     if (!form.email.trim()) {
       newErrors.email = t("contact.form.errors.emailRequired");
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       newErrors.email = t("contact.form.errors.emailInvalid");
     }
 
-    // Validate phone
     if (!form.phone.trim()) {
       newErrors.phone = t("contact.form.errors.phoneRequired");
     } else if (!/^(0|\+84)[3|5|7|8|9][0-9]{8}$/.test(form.phone.trim())) {
       newErrors.phone = t("contact.form.errors.phoneInvalid");
     }
 
-    // Validate service
-    if (!form.service) {
-      newErrors.service = t("contact.form.errors.serviceRequired");
+    if (!form.subject.trim()) {
+      newErrors.subject = t("contact.form.errors.subjectRequired");
     }
 
-    // Validate message
     if (!form.message.trim()) {
       newErrors.message = t("contact.form.errors.messageRequired");
     } else if (form.message.trim().length < 10) {
@@ -97,8 +98,7 @@ const Contact: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // Send email via API route
-      const response = await fetch("/api/send-email", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -107,7 +107,7 @@ const Contact: React.FC = () => {
           fullName: form.fullName,
           email: form.email,
           phone: form.phone,
-          service: form.service,
+          subject: form.subject,
           message: form.message
         })
       });
@@ -120,14 +120,7 @@ const Contact: React.FC = () => {
           fullName: "",
           email: "",
           phone: "",
-          service: "",
-          message: ""
-        });
-        setErrors({
-          fullName: "",
-          email: "",
-          phone: "",
-          service: "",
+          subject: "",
           message: ""
         });
       } else {
@@ -145,36 +138,33 @@ const Contact: React.FC = () => {
     {
       icon: Mail,
       label: t("contact.info.email.label"),
-      items: [
-        {
-          label: t("contact.info.email.personal"),
-          value: "tienphat29102003@gmail.com",
-          href: "mailto:tienphat29102003@gmail.com"
-        },
-        {
-          label: t("contact.info.email.work"),
-          value: "tienphat.work29@gmail.com",
-          href: "mailto:tienphat.work29@gmail.com"
-        }
-      ]
+      value: profile.email,
+      href: `mailto:${profile.email || ""}`
     },
     {
       icon: Phone,
       label: t("contact.info.phone.label"),
-      value: "+84 376 549 230",
-      href: "tel:+84376549230"
+      value: profile.phone,
+      href: `tel:${profile.phone || ""}`
     },
     {
       icon: MapPin,
       label: t("contact.info.location.label"),
-      value: "Ho Chi Minh City, Vietnam"
+      value: isVi ? profile.address_vi : profile.address_en
     }
   ];
 
   return (
-    <section ref={contactRef} id="contact" className="py-16 sm:py-20 lg:py-24">
+    <section id="contact" className="py-16 sm:py-20 lg:py-24">
+      <Toaster position="top-right" richColors />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
           <h2
             className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4"
             style={{ color: "var(--foreground)" }}
@@ -186,14 +176,19 @@ const Contact: React.FC = () => {
             className="text-lg max-w-2xl mx-auto"
             style={{ color: "var(--foreground)" }}
           >
-            Let's work together! Feel free to reach out if you have any
-            questions or opportunities.
+            {t("contact.description")}
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Information */}
-          <div className="space-y-8">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="space-y-8"
+          >
             <div>
               <h3
                 className="text-2xl font-semibold mb-6"
@@ -201,9 +196,6 @@ const Contact: React.FC = () => {
               >
                 {t("contact.getInTouch")}
               </h3>
-              <p className="mb-8 leading-relaxed text-gray-600 dark:text-gray-400">
-                {t("contact.description")}
-              </p>
             </div>
 
             <div className="space-y-6">
@@ -219,20 +211,7 @@ const Contact: React.FC = () => {
                     <div className="font-semibold text-gray-900 dark:text-white mb-1">
                       {info.label}
                     </div>
-                    {info.items ? (
-                      <div className="space-y-1">
-                        {info.items.map((item, idx) => (
-                          <a
-                            key={idx}
-                            href={item.href}
-                            className="block text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                          >
-                            <span className="font-medium">{item.label}:</span>{" "}
-                            {item.value}
-                          </a>
-                        ))}
-                      </div>
-                    ) : info.href ? (
+                    {info.href ? (
                       <a
                         href={info.href}
                         className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
@@ -248,10 +227,16 @@ const Contact: React.FC = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Contact Form */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 sm:p-8 contact-form border border-gray-100 dark:border-gray-700">
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+            className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 sm:p-8 contact-form border border-gray-100 dark:border-gray-700"
+          >
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -323,38 +308,23 @@ const Contact: React.FC = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  {t("contact.form.service")}
+                  {t("contact.form.subject")}
                   <span className="text-red-500 ml-1">*</span>
                 </label>
-                <select
-                  name="service"
-                  value={form.service}
+                <input
+                  type="text"
+                  name="subject"
+                  value={form.subject}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 ${
-                    errors.service
+                  className={`w-full px-4 py-3 border rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 ${
+                    errors.subject
                       ? "border-red-500 dark:border-red-500"
                       : "border-gray-300 dark:border-gray-600"
                   }`}
-                >
-                  <option value="">{t("contact.form.selectService")}</option>
-                  <option value="webDevelopment">
-                    {t("services.webDevelopment.title")}
-                  </option>
-                  <option value="ecommerce">
-                    {t("services.ecommerce.title")}
-                  </option>
-                  <option value="mobileDevelopment">
-                    {t("services.mobileDevelopment.title")}
-                  </option>
-                  <option value="apiDevelopment">
-                    {t("services.apiDevelopment.title")}
-                  </option>
-                  <option value="recruitment">
-                    {t("contact.form.recruitment")}
-                  </option>
-                </select>
-                {errors.service && (
-                  <p className="mt-1 text-sm text-red-500">{errors.service}</p>
+                  placeholder={t("contact.form.subjectPlaceholder")}
+                />
+                {errors.subject && (
+                  <p className="mt-1 text-sm text-red-500">{errors.subject}</p>
                 )}
               </div>
 
@@ -410,7 +380,7 @@ const Contact: React.FC = () => {
                 )}
               </button>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

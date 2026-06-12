@@ -59,7 +59,6 @@ const Footer: React.FC = () => {
   const quickLinks = [
     { name: t("nav.home"), section: "home" },
     { name: t("nav.about"), section: "about" },
-    { name: t("nav.services"), section: "services" },
     { name: t("nav.projects"), section: "projects" },
     { name: t("nav.contact"), section: "contact" }
   ];
@@ -86,7 +85,7 @@ const Footer: React.FC = () => {
     <footer className="relative bg-linear-to-br from-background via-background to-muted border-t border-border/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
-        <div className="py-8 md:py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="py-8 md:py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {/* Brand Section */}
           <div className="lg:col-span-1">
             <div className="mb-4">
@@ -113,7 +112,7 @@ const Footer: React.FC = () => {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`p-2.5 rounded-lg bg-muted/50 hover:bg-muted transition-all duration-300 ${social.color} transform hover:scale-110 hover:-translate-y-1`}
+                    className="p-2.5 rounded-lg bg-muted/50 hover:bg-muted transition-all duration-300 transform hover:scale-110 hover:-translate-y-1"
                     aria-label={social.name}
                   >
                     <Icon className="w-5 h-5" />
@@ -133,46 +132,13 @@ const Footer: React.FC = () => {
                 <li key={link.name}>
                   <button
                     onClick={() => scrollToSection(link.section)}
-                    className="text-muted-foreground hover:text-foreground transition-colors duration-300 text-sm flex items-center group"
+                    className="text-muted-foreground hover:text-foreground transition-colors duration-300 text-sm flex items-center group cursor-pointer"
                   >
                     <span className="w-0 group-hover:w-2 h-0.5 bg-primary transition-all duration-300 mr-0 group-hover:mr-2"></span>
                     {link.name}
                   </button>
                 </li>
               ))}
-            </ul>
-          </div>
-
-          {/* Services */}
-          <div className="lg:col-span-1">
-            <h4 className="text-lg font-semibold mb-4">
-              {t("footer.services")}
-            </h4>
-            <ul className="space-y-3 text-sm text-muted-foreground">
-              <li
-                onClick={() => scrollToSection("services")}
-                className="hover:text-foreground transition-colors duration-300 cursor-pointer"
-              >
-                {t("services.webDevelopment.title")}
-              </li>
-              <li
-                onClick={() => scrollToSection("services")}
-                className="hover:text-foreground transition-colors duration-300 cursor-pointer"
-              >
-                {t("services.ecommerce.title")}
-              </li>
-              <li
-                onClick={() => scrollToSection("services")}
-                className="hover:text-foreground transition-colors duration-300 cursor-pointer"
-              >
-                {t("services.mobileDevelopment.title")}
-              </li>
-              <li
-                onClick={() => scrollToSection("services")}
-                className="hover:text-foreground transition-colors duration-300 cursor-pointer"
-              >
-                {t("services.apiDevelopment.title")}
-              </li>
             </ul>
           </div>
 

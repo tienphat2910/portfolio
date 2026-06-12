@@ -1,7 +1,7 @@
-const _jUQ4rKdGh1pnmuLgVi5Q = require('../dictionary/index.json');
+const _1to0rbhxppx = require('../dictionary/index.json');
 
 const dictionaries = {
-  "index": _jUQ4rKdGh1pnmuLgVi5Q
+  "index": _1to0rbhxppx
 };
 const getDictionaries = () => dictionaries;
 

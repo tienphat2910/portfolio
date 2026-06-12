@@ -1,21 +1,30 @@
 import Hero from "../../components/Hero";
 import About from "../../components/About";
-import Services from "../../components/Services";
 import Projects from "../../components/Projects";
 import Contact from "../../components/Contact";
 import Footer from "../../components/Footer";
-import AuroraGradientBackground from "../../components/AuroraGradientBackground";
+import { getPortfolioData } from "../../lib/supabase/service";
 
-export default function Home() {
+export default async function Home({
+  params
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const data = await getPortfolioData(locale);
+
   return (
     <>
       <main className="pt-16 relative">
-        <AuroraGradientBackground />
-        <Hero />
-        <About />
-        <Services />
-        <Projects />
-        <Contact />
+        <Hero profile={data.profile} />
+        <About
+          profile={data.profile}
+          skills={data.skills}
+          experiences={data.experiences}
+          education={data.education}
+        />
+        <Projects projects={data.projects} />
+        <Contact profile={data.profile} />
       </main>
       <Footer />
     </>

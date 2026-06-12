@@ -1,7 +1,7 @@
-import _NUeUYVUL6nCneeRtOS3i from '../unmerged_dictionary/index.json' with { type: 'json' };
+import _2cmclq5gb0u from '../unmerged_dictionary/index.json' with { type: 'json' };
 
 const dictionaries = {
-  "index": _NUeUYVUL6nCneeRtOS3i
+  "index": _2cmclq5gb0u
 };
 const getUnmergedDictionaries = () => dictionaries;
 

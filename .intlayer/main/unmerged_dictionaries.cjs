@@ -1,7 +1,7 @@
-const _NUeUYVUL6nCneeRtOS3i = require('../unmerged_dictionary/index.json');
+const _2cmclq5gb0u = require('../unmerged_dictionary/index.json');
 
 const dictionaries = {
-  "index": _NUeUYVUL6nCneeRtOS3i
+  "index": _2cmclq5gb0u
 };
 const getUnmergedDictionaries = () => dictionaries;
 

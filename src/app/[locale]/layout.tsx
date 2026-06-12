@@ -4,7 +4,6 @@ import { getMessages } from "next-intl/server";
 import { ThemeProvider } from "../../contexts/ThemeContext";
 import { LanguageProvider } from "../../contexts/LanguageContext";
 import Header from "../../components/Header";
-import { Toaster } from "react-hot-toast";
 import type { Metadata } from "next";
 import "boxicons/css/boxicons.min.css";
 import "devicon/devicon.min.css";
@@ -84,40 +83,39 @@ export default async function LocaleLayout({
   const messages = await getMessages({ locale });
 
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning={true}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var savedTheme = localStorage.getItem('theme');
+                  var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    document.documentElement.style.colorScheme = 'dark';
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                    document.documentElement.removeAttribute('data-theme');
+                    document.documentElement.style.colorScheme = 'light';
+                  }
+                } catch (e) {}
+              })();
+            `
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden 
     min-h-screen 
     bg-background 
     text-foreground`}
-        suppressHydrationWarning={true}
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ThemeProvider>
             <LanguageProvider>
-              <Toaster
-                position="top-right"
-                toastOptions={{
-                  duration: 4000,
-                  style: {
-                    background: "var(--background)",
-                    color: "var(--foreground)",
-                    border: "1px solid var(--border-rgb, rgba(0, 0, 0, 0.1))"
-                  },
-                  success: {
-                    iconTheme: {
-                      primary: "#10b981",
-                      secondary: "#fff"
-                    }
-                  },
-                  error: {
-                    iconTheme: {
-                      primary: "#ef4444",
-                      secondary: "#fff"
-                    }
-                  }
-                }}
-              />
               <Header />
               {children}
             </LanguageProvider>

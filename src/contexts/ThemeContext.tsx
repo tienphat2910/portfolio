@@ -14,43 +14,37 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children
 }) => {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window !== "undefined") {
+      return document.documentElement.classList.contains("dark") ? "dark" : "light";
+    }
+    return "light";
+  });
 
   useEffect(() => {
-    // Load theme from localStorage, default to light
     const savedTheme = localStorage.getItem("theme") as Theme;
     if (savedTheme && (savedTheme === "light" || savedTheme === "dark")) {
       setTheme(savedTheme);
     } else {
-      // If no valid theme saved, default to light and save it
-      setTheme("light");
-      localStorage.setItem("theme", "light");
+      const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setTheme(systemDark ? "dark" : "light");
     }
   }, []);
 
   useEffect(() => {
-    // Apply theme to document
     if (theme === "dark") {
       document.documentElement.setAttribute("data-theme", "dark");
       document.documentElement.classList.add("dark");
+      try {
+        (document.documentElement.style as any).colorScheme = "dark";
+      } catch (e) {}
     } else {
       document.documentElement.removeAttribute("data-theme");
       document.documentElement.classList.remove("dark");
+      try {
+        (document.documentElement.style as any).colorScheme = "light";
+      } catch (e) {}
     }
-    // Tell browsers (Edge in particular) the preferred color scheme so
-    // CSS custom properties are recalculated. This helps Edge pick up
-    // changes to --foreground / other vars immediately.
-    try {
-      (document.documentElement.style as any).colorScheme =
-        theme === "dark" ? "dark" : "light";
-      // Force a reflow so the UA applies updated custom properties now.
-      // Reading offsetHeight is a cheap way to trigger it.
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      document.documentElement.offsetHeight;
-    } catch (e) {
-      // ignore in environments where document is not available
-    }
-    // Save to localStorage
     localStorage.setItem("theme", theme);
   }, [theme]);
 

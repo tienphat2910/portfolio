@@ -1,9 +1,9 @@
 import "intlayer";
-import _okbEGKTfWjNjUrJboCqB from './index.ts';
+import _12qeq9hje6d from './index.ts';
 
 declare module 'intlayer' {
   interface __DictionaryRegistry {
-    "index": typeof _okbEGKTfWjNjUrJboCqB;
+    "index": typeof _12qeq9hje6d;
   }
 
   interface __DeclaredLocalesRegistry {
@@ -16,5 +16,11 @@ declare module 'intlayer' {
     "vi": 1;
   }
 
+  interface __SchemaRegistry {
+
+  }
+
   interface __StrictModeRegistry { mode: 'inclusive' }
+
+  interface __EditorRegistry { enabled : false } 
 }

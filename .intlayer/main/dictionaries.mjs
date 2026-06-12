@@ -1,7 +1,7 @@
-import _jUQ4rKdGh1pnmuLgVi5Q from '../dictionary/index.json' with { type: 'json' };
+import _1to0rbhxppx from '../dictionary/index.json' with { type: 'json' };
 
 const dictionaries = {
-  "index": _jUQ4rKdGh1pnmuLgVi5Q
+  "index": _1to0rbhxppx
 };
 const getDictionaries = () => dictionaries;
 
