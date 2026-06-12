@@ -116,6 +116,17 @@ export default {
           "copyright": "© {year} Phat Nguyen. All rights reserved.",
           "madeWith": "Made with",
           "by": "by"
+        },
+        "admin": {
+          "profileSettings": "Profile & Settings",
+          "experienceEducation": "Experience & Education",
+          "skillsExpertise": "Skills & Expertise",
+          "projectsCms": "Projects CMS",
+          "contactInbox": "Contact Inbox",
+          "cmsPortal": "CMS PORTAL",
+          "signedInAs": "Signed in as",
+          "signOut": "Sign Out",
+          "viewPublicWebsite": "View public website"
         }
       },
       "vi": {
@@ -230,6 +241,17 @@ export default {
           "copyright": "© {year} Phat Nguyen. Bản quyền thuộc về.",
           "madeWith": "Được làm với",
           "by": "bởi"
+        },
+        "admin": {
+          "profileSettings": "Cấu hình & Cá nhân",
+          "experienceEducation": "Kinh nghiệm & Học vấn",
+          "skillsExpertise": "Kỹ năng & Chuyên môn",
+          "projectsCms": "Quản lý Dự án",
+          "contactInbox": "Hộp thư liên hệ",
+          "cmsPortal": "CMS PORTAL",
+          "signedInAs": "Đăng nhập với",
+          "signOut": "Đăng xuất",
+          "viewPublicWebsite": "Xem trang website"
         }
       }
     }

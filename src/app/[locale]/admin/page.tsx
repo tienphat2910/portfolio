@@ -7,11 +7,136 @@ import { Input } from "@/src/components/ui/input";
 import { Textarea } from "@/src/components/ui/textarea";
 import { FaUserEdit, FaGlobe, FaFolderOpen, FaInbox, FaCogs } from "react-icons/fa";
 import { toast } from "@/src/components/ui/toast";
+import { useLocale } from "next-intl";
+
+const translations = {
+  en: {
+    overviewTitle: "Overview & Settings",
+    overviewSubtitle: "Manage your personal biography details, links, and SEO configuration",
+    unreadMessages: "Unread Messages",
+    totalProjects: "Total Projects",
+    totalSkills: "Total Skills",
+    personalBiographyInfo: "Personal Biography Info",
+    fullName: "Full Name",
+    resumeUrl: "Resume/CV PDF URL",
+    positionTitleEn: "Position Title (English)",
+    positionTitleVi: "Position Title (Vietnamese)",
+    contactEmail: "Contact Email",
+    contactPhone: "Contact Phone",
+    addressLocationEn: "Address/Location (English)",
+    addressLocationVi: "Address/Location (Vietnamese)",
+    bioIntroEn: "Bio/Intro (English)",
+    bioIntroVi: "Bio/Intro (Vietnamese)",
+    socialLinks: "Social Links",
+    githubProfileUrl: "GitHub Profile URL",
+    linkedinProfileUrl: "LinkedIn Profile URL",
+    facebookProfileUrl: "Facebook Profile URL",
+    instagramProfileUrl: "Instagram Profile URL",
+    saveProfile: "Save Profile",
+    seoConfigurations: "SEO configurations",
+    seoTitleEn: "SEO Title (English)",
+    seoTitleVi: "SEO Title (Vietnamese)",
+    seoDescriptionEn: "SEO Description (English)",
+    seoDescriptionVi: "SEO Description (Vietnamese)",
+    productionSiteUrl: "Production Site URL",
+    ogCoverImageUrl: "OG Cover Image URL",
+    saveSeoSettings: "Save SEO Settings"
+  },
+  vi: {
+    overviewTitle: "Tổng quan & Cài đặt",
+    overviewSubtitle: "Quản lý chi tiết tiểu sử cá nhân, liên kết và cấu hình SEO của bạn",
+    unreadMessages: "Tin nhắn chưa đọc",
+    totalProjects: "Tổng số dự án",
+    totalSkills: "Tổng số kỹ năng",
+    personalBiographyInfo: "Thông tin tiểu sử cá nhân",
+    fullName: "Họ và tên",
+    resumeUrl: "Đường dẫn file CV/Resume PDF",
+    positionTitleEn: "Tiêu đề vị trí (Tiếng Anh)",
+    positionTitleVi: "Tiêu đề vị trí (Tiếng Việt)",
+    contactEmail: "Email liên hệ",
+    contactPhone: "Số điện thoại liên hệ",
+    addressLocationEn: "Địa chỉ (Tiếng Anh)",
+    addressLocationVi: "Địa chỉ (Tiếng Việt)",
+    bioIntroEn: "Giới thiệu bản thân (Tiếng Anh)",
+    bioIntroVi: "Giới thiệu bản thân (Tiếng Việt)",
+    socialLinks: "Liên kết mạng xã hội",
+    githubProfileUrl: "Đường dẫn GitHub",
+    linkedinProfileUrl: "Đường dẫn LinkedIn",
+    facebookProfileUrl: "Đường dẫn Facebook",
+    instagramProfileUrl: "Đường dẫn Instagram",
+    saveProfile: "Lưu thông tin",
+    seoConfigurations: "Cấu hình SEO",
+    seoTitleEn: "Tiêu đề SEO (Tiếng Anh)",
+    seoTitleVi: "Tiêu đề SEO (Tiếng Việt)",
+    seoDescriptionEn: "Mô tả SEO (Tiếng Anh)",
+    seoDescriptionVi: "Mô tả SEO (Tiếng Việt)",
+    productionSiteUrl: "Đường dẫn trang web (Production)",
+    ogCoverImageUrl: "Đường dẫn ảnh bìa OG (Cover Image)",
+    saveSeoSettings: "Lưu cấu hình SEO"
+  }
+};
 
 export default function AdminDashboardPage() {
+  const locale = useLocale();
+  const t = translations[locale === "vi" ? "vi" : "en"];
+
   const [loading, setLoading] = useState(true);
   const [profileLoading, setProfileLoading] = useState(false);
   const [seoLoading, setSeoLoading] = useState(false);
+  const [cvUploading, setCvUploading] = useState(false);
+  const [ogUploading, setOgUploading] = useState(false);
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: "image" | "file") => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (type === "image") {
+      setOgUploading(true);
+    } else {
+      setCvUploading(true);
+    }
+
+    try {
+      const supabase = createClient();
+      
+      const timestamp = Date.now();
+      const safeName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_");
+      const folder = type === "image" ? "images" : "files";
+      const filePath = `${folder}/${timestamp}-${safeName}`;
+
+      // Upload file to Supabase storage bucket 'portfolio-assets'
+      const { data, error } = await supabase.storage
+        .from("portfolio-assets")
+        .upload(filePath, file, {
+          cacheControl: "3600",
+          upsert: false
+        });
+
+      if (error) throw error;
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from("portfolio-assets")
+        .getPublicUrl(filePath);
+
+      if (type === "image") {
+        setSeo((prev) => ({ ...prev, ogImageUrl: publicUrl }));
+        toast.success("OG Image uploaded to Supabase successfully!");
+      } else {
+        setProfile((prev) => ({ ...prev, resumeUrl: publicUrl }));
+        toast.success("CV PDF uploaded to Supabase successfully!");
+      }
+    } catch (err: any) {
+      console.error("Supabase Storage Upload error:", err);
+      toast.error(err.message || "Failed to upload. Make sure bucket 'portfolio-assets' is created and public in Supabase.");
+    } finally {
+      if (type === "image") {
+        setOgUploading(false);
+      } else {
+        setCvUploading(false);
+      }
+    }
+  };
 
   // Stats State
   const [stats, setStats] = useState({
@@ -223,10 +348,10 @@ export default function AdminDashboardPage() {
       {/* Title */}
       <div>
         <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-          Overview & Settings
+          {t.overviewTitle}
         </h1>
         <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-          Manage your personal biography details, links, and SEO configuration
+          {t.overviewSubtitle}
         </p>
       </div>
 
@@ -238,7 +363,7 @@ export default function AdminDashboardPage() {
             <FaInbox size={22} />
           </div>
           <div>
-            <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Unread Messages</p>
+            <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider">{t.unreadMessages}</p>
             <p className="text-2xl font-black text-gray-900 dark:text-white mt-0.5">{stats.unreadMessages}</p>
           </div>
         </div>
@@ -249,7 +374,7 @@ export default function AdminDashboardPage() {
             <FaFolderOpen size={22} />
           </div>
           <div>
-            <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Total Projects</p>
+            <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider">{t.totalProjects}</p>
             <p className="text-2xl font-black text-gray-900 dark:text-white mt-0.5">{stats.totalProjects}</p>
           </div>
         </div>
@@ -260,7 +385,7 @@ export default function AdminDashboardPage() {
             <FaGlobe size={22} />
           </div>
           <div>
-            <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Total Skills</p>
+            <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider">{t.totalSkills}</p>
             <p className="text-2xl font-black text-gray-900 dark:text-white mt-0.5">{stats.totalSkills}</p>
           </div>
         </div>
@@ -271,34 +396,51 @@ export default function AdminDashboardPage() {
         <div className="lg:col-span-2 bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-3xl border border-gray-200/50 dark:border-gray-800 space-y-6">
           <div className="flex items-center gap-3 border-b border-gray-200 dark:border-gray-800 pb-4">
             <FaUserEdit className="text-xl text-blue-600" />
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white">Personal Biography Info</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t.personalBiographyInfo}</h2>
           </div>
 
           <form onSubmit={handleProfileSubmit} className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <Input
-                label="Full Name"
+                label={t.fullName}
                 value={profile.name}
                 onChange={(e) => setProfile({ ...profile, name: e.target.value })}
                 required
               />
-              <Input
-                label="Resume/CV PDF URL"
-                value={profile.resumeUrl}
-                onChange={(e) => setProfile({ ...profile, resumeUrl: e.target.value })}
-                placeholder="/cv.pdf or external url"
-              />
+              <div className="space-y-1.5">
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                  {t.resumeUrl}
+                </label>
+                <div className="flex gap-2 items-center">
+                  <input
+                    type="text"
+                    value={profile.resumeUrl}
+                    onChange={(e) => setProfile({ ...profile, resumeUrl: e.target.value })}
+                    placeholder="/cv.pdf or external url"
+                    className="flex-grow w-full px-4 py-3 text-sm rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-hidden transition-all"
+                  />
+                  <label className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-3 rounded-xl shadow-xs transition-colors shrink-0 flex items-center justify-center min-w-[90px] h-[46px] select-none">
+                    {cvUploading ? "..." : "Upload"}
+                    <input
+                      type="file"
+                      accept=".pdf,.doc,.docx"
+                      onChange={(e) => handleFileUpload(e, "file")}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <Input
-                label="Position Title (English)"
+                label={t.positionTitleEn}
                 value={profile.positionEn}
                 onChange={(e) => setProfile({ ...profile, positionEn: e.target.value })}
                 required
               />
               <Input
-                label="Position Title (Vietnamese)"
+                label={t.positionTitleVi}
                 value={profile.positionVi}
                 onChange={(e) => setProfile({ ...profile, positionVi: e.target.value })}
                 required
@@ -307,14 +449,14 @@ export default function AdminDashboardPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <Input
-                label="Contact Email"
+                label={t.contactEmail}
                 type="email"
                 value={profile.email}
                 onChange={(e) => setProfile({ ...profile, email: e.target.value })}
                 required
               />
               <Input
-                label="Contact Phone"
+                label={t.contactPhone}
                 value={profile.phone}
                 onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
                 required
@@ -323,13 +465,13 @@ export default function AdminDashboardPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <Input
-                label="Address/Location (English)"
+                label={t.addressLocationEn}
                 value={profile.addressEn}
                 onChange={(e) => setProfile({ ...profile, addressEn: e.target.value })}
                 required
               />
               <Input
-                label="Address/Location (Vietnamese)"
+                label={t.addressLocationVi}
                 value={profile.addressVi}
                 onChange={(e) => setProfile({ ...profile, addressVi: e.target.value })}
                 required
@@ -337,7 +479,7 @@ export default function AdminDashboardPage() {
             </div>
 
             <Textarea
-              label="Bio/Intro (English)"
+              label={t.bioIntroEn}
               rows={4}
               value={profile.bioEn}
               onChange={(e) => setProfile({ ...profile, bioEn: e.target.value })}
@@ -345,7 +487,7 @@ export default function AdminDashboardPage() {
             />
 
             <Textarea
-              label="Bio/Intro (Vietnamese)"
+              label={t.bioIntroVi}
               rows={4}
               value={profile.bioVi}
               onChange={(e) => setProfile({ ...profile, bioVi: e.target.value })}
@@ -353,28 +495,28 @@ export default function AdminDashboardPage() {
             />
 
             <div className="border-t border-gray-200 dark:border-gray-800 pt-6">
-              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Social Links</h3>
+              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">{t.socialLinks}</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <Input
-                  label="GitHub Profile URL"
+                  label={t.githubProfileUrl}
                   value={profile.github}
                   onChange={(e) => setProfile({ ...profile, github: e.target.value })}
                   placeholder="https://github.com/username"
                 />
                 <Input
-                  label="LinkedIn Profile URL"
+                  label={t.linkedinProfileUrl}
                   value={profile.linkedin}
                   onChange={(e) => setProfile({ ...profile, linkedin: e.target.value })}
                   placeholder="https://linkedin.com/in/username"
                 />
                 <Input
-                  label="Facebook Profile URL"
+                  label={t.facebookProfileUrl}
                   value={profile.facebook}
                   onChange={(e) => setProfile({ ...profile, facebook: e.target.value })}
                   placeholder="https://facebook.com/username"
                 />
                 <Input
-                  label="Instagram Profile URL"
+                  label={t.instagramProfileUrl}
                   value={profile.instagram}
                   onChange={(e) => setProfile({ ...profile, instagram: e.target.value })}
                   placeholder="https://instagram.com/username"
@@ -384,7 +526,7 @@ export default function AdminDashboardPage() {
 
             <div className="flex justify-end pt-4">
               <Button type="submit" isLoading={profileLoading}>
-                Save Profile
+                {t.saveProfile}
               </Button>
             </div>
           </form>
@@ -394,32 +536,32 @@ export default function AdminDashboardPage() {
         <div className="bg-white dark:bg-gray-900 p-6 rounded-3xl border border-gray-200/50 dark:border-gray-800 space-y-6 h-fit">
           <div className="flex items-center gap-3 border-b border-gray-200 dark:border-gray-800 pb-4">
             <FaCogs className="text-xl text-emerald-600" />
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white">SEO configurations</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t.seoConfigurations}</h2>
           </div>
 
           <form onSubmit={handleSeoSubmit} className="space-y-6">
             <Input
-              label="SEO Title (English)"
+              label={t.seoTitleEn}
               value={seo.seoTitleEn}
               onChange={(e) => setSeo({ ...seo, seoTitleEn: e.target.value })}
               required
             />
             <Input
-              label="SEO Title (Vietnamese)"
+              label={t.seoTitleVi}
               value={seo.seoTitleVi}
               onChange={(e) => setSeo({ ...seo, seoTitleVi: e.target.value })}
               required
             />
 
             <Textarea
-              label="SEO Description (English)"
+              label={t.seoDescriptionEn}
               rows={3}
               value={seo.seoDescriptionEn}
               onChange={(e) => setSeo({ ...seo, seoDescriptionEn: e.target.value })}
               required
             />
             <Textarea
-              label="SEO Description (Vietnamese)"
+              label={t.seoDescriptionVi}
               rows={3}
               value={seo.seoDescriptionVi}
               onChange={(e) => setSeo({ ...seo, seoDescriptionVi: e.target.value })}
@@ -427,23 +569,40 @@ export default function AdminDashboardPage() {
             />
 
             <Input
-              label="Production Site URL"
+              label={t.productionSiteUrl}
               value={seo.siteUrl}
               onChange={(e) => setSeo({ ...seo, siteUrl: e.target.value })}
               placeholder="https://phatnguyen.vercel.app"
               required
             />
 
-            <Input
-              label="OG Cover Image URL"
-              value={seo.ogImageUrl}
-              onChange={(e) => setSeo({ ...seo, ogImageUrl: e.target.value })}
-              placeholder="/images/og-image.png"
-            />
+            <div className="space-y-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                {t.ogCoverImageUrl}
+              </label>
+              <div className="flex gap-2 items-center">
+                <input
+                  type="text"
+                  value={seo.ogImageUrl}
+                  onChange={(e) => setSeo({ ...seo, ogImageUrl: e.target.value })}
+                  placeholder="/images/og-image.png"
+                  className="flex-grow w-full px-4 py-3 text-sm rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 outline-hidden transition-all"
+                />
+                <label className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-3 rounded-xl shadow-xs transition-colors shrink-0 flex items-center justify-center min-w-[90px] h-[46px] select-none">
+                  {ogUploading ? "..." : "Upload"}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleFileUpload(e, "image")}
+                    className="hidden"
+                  />
+                </label>
+              </div>
+            </div>
 
             <div className="flex justify-end pt-4">
               <Button type="submit" variant="primary" className="w-full" isLoading={seoLoading}>
-                Save SEO Settings
+                {t.saveSeoSettings}
               </Button>
             </div>
           </form>

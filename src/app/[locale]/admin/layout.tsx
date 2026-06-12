@@ -3,8 +3,9 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useParams, usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { createClient } from "@/src/lib/supabase/client";
-import { FaUser, FaFolder, FaEnvelope, FaSignOutAlt, FaHome, FaSlidersH } from "react-icons/fa";
+import { FaUser, FaFolder, FaEnvelope, FaSignOutAlt, FaHome, FaSlidersH, FaTools, FaBriefcase } from "react-icons/fa";
 import { toast, Toaster } from "@/src/components/ui/toast";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -13,17 +14,35 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const pathname = usePathname();
   const locale = (params?.locale as string) || "en";
   const [adminEmail, setAdminEmail] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // If we are on the login page, don't show the sidebar wrapper!
+  const isLoginPage = pathname === `/${locale}/admin/login`;
 
   useEffect(() => {
     const fetchSession = async () => {
-      const supabase = createClient();
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        setAdminEmail(user.email || "Admin");
+      try {
+        const supabase = createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          setAdminEmail(user.email || "Admin");
+          setLoading(false);
+        } else if (!isLoginPage) {
+          router.push(`/${locale}/admin/login`);
+        } else {
+          setLoading(false);
+        }
+      } catch (err) {
+        console.error("Error fetching session:", err);
+        if (!isLoginPage) {
+          router.push(`/${locale}/admin/login`);
+        } else {
+          setLoading(false);
+        }
       }
     };
     fetchSession();
-  }, []);
+  }, [locale, isLoginPage, router]);
 
   const handleSignOut = async () => {
     try {
@@ -38,29 +57,48 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     }
   };
 
+  const t = useTranslations();
+
   const navItems = [
     {
-      name: "Profile & Settings",
+      name: t("admin.profileSettings"),
       href: `/${locale}/admin`,
       icon: FaUser,
       isActive: pathname === `/${locale}/admin`
     },
     {
-      name: "Projects CMS",
+      name: t("admin.experienceEducation"),
+      href: `/${locale}/admin/resume`,
+      icon: FaBriefcase,
+      isActive: pathname.startsWith(`/${locale}/admin/resume`)
+    },
+    {
+      name: t("admin.skillsExpertise"),
+      href: `/${locale}/admin/skills`,
+      icon: FaTools,
+      isActive: pathname.startsWith(`/${locale}/admin/skills`)
+    },
+    {
+      name: t("admin.projectsCms"),
       href: `/${locale}/admin/projects`,
       icon: FaFolder,
       isActive: pathname.startsWith(`/${locale}/admin/projects`)
     },
     {
-      name: "Contact Inbox",
+      name: t("admin.contactInbox"),
       href: `/${locale}/admin/messages`,
       icon: FaEnvelope,
       isActive: pathname.startsWith(`/${locale}/admin/messages`)
     }
   ];
 
-  // If we are on the login page, don't show the sidebar wrapper!
-  const isLoginPage = pathname === `/${locale}/admin/login`;
+  if (loading && !isLoginPage) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   if (isLoginPage) {
     return <>{children}</>;
@@ -74,13 +112,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="p-6 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
           <Link href={`/${locale}/admin`} className="flex items-center gap-2">
             <span className="font-extrabold text-lg tracking-wider text-blue-600 dark:text-blue-400">
-              CMS PORTAL
+              {t("admin.cmsPortal")}
             </span>
           </Link>
           <Link
             href={`/${locale}`}
             className="p-2 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 rounded-lg transition-colors border border-border/10"
-            title="View public website"
+            title={t("admin.viewPublicWebsite")}
           >
             <FaHome size={14} />
           </Link>
@@ -89,7 +127,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* User Badge */}
         {adminEmail && (
           <div className="px-6 py-4 border-b border-gray-200/50 dark:border-gray-800/50">
-            <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider">Signed in as</p>
+            <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider">{t("admin.signedInAs")}</p>
             <p className="text-sm font-bold text-gray-700 dark:text-gray-200 truncate mt-0.5" title={adminEmail}>
               {adminEmail}
             </p>
@@ -124,13 +162,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             className="w-full flex items-center gap-3 px-4 py-3 text-sm font-semibold text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-xl transition-all cursor-pointer"
           >
             <FaSignOutAlt size={16} />
-            <span>Sign Out</span>
+            <span>{t("admin.signOut")}</span>
           </button>
         </div>
       </aside>
 
       {/* Main Workspace */}
-      <main className="flex-1 p-6 md:p-10 overflow-y-auto max-w-full">
+      <main className="flex-1 p-6 md:p-10 overflow-y-auto max-w-full bg-grid-pattern">
         <div className="max-w-6xl mx-auto">
           {children}
         </div>

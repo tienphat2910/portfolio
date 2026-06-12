@@ -122,9 +122,6 @@ const Header: React.FC = () => {
                   target.style.display = "none";
                 }}
               />
-              <span className="font-bold text-xl tracking-wider text-primary select-none flex items-center">
-                PHAT NGUYEN
-              </span>
             </Link>
           </div>
 

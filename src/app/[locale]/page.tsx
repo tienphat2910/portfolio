@@ -15,7 +15,7 @@ export default async function Home({
 
   return (
     <>
-      <main className="pt-16 relative">
+      <main className="pt-16 relative bg-grid-pattern">
         <Hero profile={data.profile} />
         <About
           profile={data.profile}

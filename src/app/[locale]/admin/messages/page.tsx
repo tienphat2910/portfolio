@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 import { createClient } from "@/src/lib/supabase/client";
 import { Button } from "@/src/components/ui/button";
 import { FaEnvelopeOpen, FaEnvelope, FaArchive, FaTrash, FaInbox, FaPhoneAlt, FaCalendarAlt } from "react-icons/fa";
-import { toast } from "@/src/components/ui/toast";
+import { toast, Toaster } from "@/src/components/ui/toast";
+import { useLocale } from "next-intl";
 
 interface ContactMessage {
   id: string;
@@ -17,7 +18,67 @@ interface ContactMessage {
   status: string | null; // 'unread', 'read', 'archived'
 }
 
+const translations = {
+  en: {
+    title: "Contact Inbox",
+    subtitle: "Review and manage client contact form submissions",
+    filterInbox: "Active Inbox",
+    filterArchived: "Archived",
+    listInbox: "Active Messages",
+    listArchived: "Archived Messages",
+    noMessages: "No messages found.",
+    noSubject: "(No Subject)",
+    selectPrompt: "Select a message to view its details",
+    replyViaEmail: "Reply via Email",
+    markRead: "Mark as read",
+    markUnread: "Mark as unread",
+    archiveTooltip: "Archive message",
+    deleteTooltip: "Delete permanently",
+
+    // Toasts / Confirm
+    confirmDelete: "Are you sure you want to delete this message permanently?",
+    fetchError: "Failed to load messages inbox",
+    statusReadSuccess: "Marked as read",
+    statusUnreadSuccess: "Marked as unread",
+    statusError: "Failed to update status",
+    archiveSuccess: "Message archived",
+    archiveError: "Failed to archive message",
+    deleteSuccess: "Message permanently deleted",
+    deleteError: "Failed to delete message"
+  },
+  vi: {
+    title: "Hộp thư liên hệ",
+    subtitle: "Xem và quản lý các liên hệ gửi từ khách hàng",
+    filterInbox: "Hộp thư đến",
+    filterArchived: "Lưu trữ",
+    listInbox: "Thư đang hoạt động",
+    listArchived: "Thư đã lưu trữ",
+    noMessages: "Không tìm thấy tin nhắn nào.",
+    noSubject: "(Không có tiêu đề)",
+    selectPrompt: "Chọn một tin nhắn để xem chi tiết",
+    replyViaEmail: "Phản hồi qua Email",
+    markRead: "Đánh dấu là đã đọc",
+    markUnread: "Đánh dấu là chưa đọc",
+    archiveTooltip: "Lưu trữ tin nhắn",
+    deleteTooltip: "Xóa vĩnh viễn",
+
+    // Toasts / Confirm
+    confirmDelete: "Bạn có chắc chắn muốn xóa tin nhắn này vĩnh viễn không?",
+    fetchError: "Không thể tải hộp thư liên hệ",
+    statusReadSuccess: "Đã đánh dấu là đã đọc",
+    statusUnreadSuccess: "Đã đánh dấu là chưa đọc",
+    statusError: "Không thể cập nhật trạng thái",
+    archiveSuccess: "Đã lưu trữ tin nhắn",
+    archiveError: "Không thể lưu trữ tin nhắn",
+    deleteSuccess: "Đã xóa tin nhắn vĩnh viễn",
+    deleteError: "Không thể xóa tin nhắn"
+  }
+};
+
 export default function AdminMessagesPage() {
+  const locale = useLocale();
+  const t = translations[locale === "vi" ? "vi" : "en"];
+
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<"inbox" | "archived">("inbox");
@@ -50,7 +111,7 @@ export default function AdminMessagesPage() {
       }
     } catch (err) {
       console.error("Load messages error:", err);
-      toast.error("Failed to load messages inbox");
+      toast.error(t.fetchError);
     } finally {
       setLoading(false);
     }
@@ -90,7 +151,7 @@ export default function AdminMessagesPage() {
         .eq("id", msg.id);
 
       if (error) throw error;
-      toast.success(newStatus === "read" ? "Marked as read" : "Marked as unread");
+      toast.success(newStatus === "read" ? t.statusReadSuccess : t.statusUnreadSuccess);
       
       // Update local states
       setMessages(prev =>
@@ -100,7 +161,7 @@ export default function AdminMessagesPage() {
         setSelectedMessage({ ...selectedMessage, status: newStatus });
       }
     } catch (err: any) {
-      toast.error(err.message || "Failed to update status");
+      toast.error(err.message || t.statusError);
     }
   };
 
@@ -113,7 +174,7 @@ export default function AdminMessagesPage() {
         .eq("id", id);
 
       if (error) throw error;
-      toast.success("Message archived");
+      toast.success(t.archiveSuccess);
       
       // Select another message if the archived one was selected
       if (selectedMessage?.id === id) {
@@ -123,12 +184,12 @@ export default function AdminMessagesPage() {
       
       setMessages(prev => prev.filter(msg => msg.id !== id));
     } catch (err: any) {
-      toast.error(err.message || "Failed to archive message");
+      toast.error(err.message || t.archiveError);
     }
   };
 
   const deleteMessage = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this message permanently?")) return;
+    if (!confirm(t.confirmDelete)) return;
 
     try {
       const supabase = createClient() as any;
@@ -138,7 +199,7 @@ export default function AdminMessagesPage() {
         .eq("id", id);
 
       if (error) throw error;
-      toast.success("Message permanently deleted");
+      toast.success(t.deleteSuccess);
       
       if (selectedMessage?.id === id) {
         const nextMsg = messages.find(msg => msg.id !== id);
@@ -147,7 +208,7 @@ export default function AdminMessagesPage() {
       
       setMessages(prev => prev.filter(msg => msg.id !== id));
     } catch (err: any) {
-      toast.error(err.message || "Failed to delete message");
+      toast.error(err.message || t.deleteError);
     }
   };
 
@@ -161,7 +222,7 @@ export default function AdminMessagesPage() {
   const formatDateTime = (dateStr: string) => {
     try {
       const date = new Date(dateStr);
-      return date.toLocaleString("en-US", {
+      return date.toLocaleString(locale === "vi" ? "vi-VN" : "en-US", {
         year: "numeric",
         month: "short",
         day: "numeric",
@@ -179,10 +240,10 @@ export default function AdminMessagesPage() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">
-            Contact Inbox
+            {t.title}
           </h1>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            Review and manage client contact form submissions
+            {t.subtitle}
           </p>
         </div>
 
@@ -196,7 +257,7 @@ export default function AdminMessagesPage() {
                 : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
             }`}
           >
-            <FaInbox size={12} /> Active Inbox
+            <FaInbox size={12} /> {t.filterInbox}
           </button>
           <button
             onClick={() => setFilter("archived")}
@@ -206,7 +267,7 @@ export default function AdminMessagesPage() {
                 : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
             }`}
           >
-            <FaArchive size={12} /> Archived
+            <FaArchive size={12} /> {t.filterArchived}
           </button>
         </div>
       </div>
@@ -216,7 +277,7 @@ export default function AdminMessagesPage() {
         <div className="lg:col-span-1 bg-white dark:bg-gray-900 rounded-3xl border border-gray-200/50 dark:border-gray-800 overflow-hidden shadow-xs h-[650px] flex flex-col">
           <div className="p-4 bg-gray-50/50 dark:bg-gray-800/20 border-b border-gray-200 dark:border-gray-800">
             <h3 className="font-bold text-gray-700 dark:text-gray-300 text-sm">
-              {filter === "inbox" ? "Active Messages" : "Archived Messages"}
+              {filter === "inbox" ? t.listInbox : t.listArchived}
             </h3>
           </div>
 
@@ -230,7 +291,7 @@ export default function AdminMessagesPage() {
               </div>
             ) : messages.length === 0 ? (
               <div className="text-center py-12 text-sm text-gray-500">
-                No messages found.
+                {t.noMessages}
               </div>
             ) : (
               messages.map((msg) => (
@@ -248,11 +309,11 @@ export default function AdminMessagesPage() {
                       {msg.name}
                     </span>
                     <span className="text-[10px] text-gray-400 shrink-0 font-medium">
-                      {new Date(msg.created_at).toLocaleDateString()}
+                      {new Date(msg.created_at).toLocaleDateString(locale === "vi" ? "vi-VN" : "en-US")}
                     </span>
                   </div>
                   <h4 className={`text-xs mt-1 truncate ${msg.status === "unread" ? "font-bold text-gray-900 dark:text-white" : "text-gray-500 dark:text-gray-400"}`}>
-                    {msg.subject || "(No Subject)"}
+                    {msg.subject || t.noSubject}
                   </h4>
                   <p className="text-xs text-gray-400 line-clamp-1 mt-1 font-medium">
                     {msg.message}
@@ -274,7 +335,7 @@ export default function AdminMessagesPage() {
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-gray-200 dark:border-gray-800 pb-6">
                 <div>
                   <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white">
-                    {selectedMessage.subject || "(No Subject)"}
+                    {selectedMessage.subject || t.noSubject}
                   </h2>
                   <div className="flex flex-wrap gap-x-6 gap-y-2 mt-3 text-sm text-gray-500 dark:text-gray-400">
                     <div className="flex items-center gap-2">
@@ -301,7 +362,7 @@ export default function AdminMessagesPage() {
                   <button
                     onClick={() => toggleReadStatus(selectedMessage)}
                     className="p-2.5 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-xl transition-all border border-border/10 cursor-pointer"
-                    title={selectedMessage.status === "unread" ? "Mark as read" : "Mark as unread"}
+                    title={selectedMessage.status === "unread" ? t.markRead : t.markUnread}
                   >
                     {selectedMessage.status === "unread" ? <FaEnvelopeOpen size={14} /> : <FaEnvelope size={14} />}
                   </button>
@@ -309,7 +370,7 @@ export default function AdminMessagesPage() {
                     <button
                       onClick={() => archiveMessage(selectedMessage.id)}
                       className="p-2.5 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-yellow-600 rounded-xl transition-all border border-border/10 cursor-pointer"
-                      title="Archive message"
+                      title={t.archiveTooltip}
                     >
                       <FaArchive size={14} />
                     </button>
@@ -317,7 +378,7 @@ export default function AdminMessagesPage() {
                   <button
                     onClick={() => deleteMessage(selectedMessage.id)}
                     className="p-2.5 bg-red-50 dark:bg-red-950/20 hover:bg-red-100 text-red-600 rounded-xl transition-all border border-red-200/10 cursor-pointer"
-                    title="Delete permanently"
+                    title={t.deleteTooltip}
                   >
                     <FaTrash size={14} />
                   </button>
@@ -337,18 +398,19 @@ export default function AdminMessagesPage() {
                   href={`mailto:${selectedMessage.email}?subject=Re: ${selectedMessage.subject || "Portfolio Contact"}`}
                   className="inline-flex items-center gap-2 py-2.5 px-5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-md cursor-pointer"
                 >
-                  <FaEnvelope /> Reply via Email
+                  <FaEnvelope /> {t.replyViaEmail}
                 </a>
               </div>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center h-full text-gray-500 space-y-4">
               <FaInbox size={48} className="text-gray-300" />
-              <p className="text-sm font-semibold">Select a message to view its details</p>
+              <p className="text-sm font-semibold">{t.selectPrompt}</p>
             </div>
           )}
         </div>
       </div>
+      <Toaster />
     </div>
   );
 }

@@ -196,7 +196,11 @@ const About: React.FC<AboutProps> = ({ profile, skills, experiences, education }
                             className="flex items-center gap-2 px-3 py-1.5 bg-gray-50 dark:bg-gray-700/50 rounded-xl border border-gray-200/60 dark:border-gray-600/40 text-sm font-medium hover:border-blue-500/50 transition-colors"
                           >
                             {skill.icon_class && (
-                              <i className={`${skill.icon_class} text-blue-500 text-lg`}></i>
+                              skill.icon_class.startsWith("/") || skill.icon_class.includes(".svg") ? (
+                                <img src={skill.icon_class} alt={skill.name} className="w-5 h-5 object-contain" />
+                              ) : (
+                                <i className={`${skill.icon_class} text-blue-500 text-lg`}></i>
+                              )
                             )}
                             <span className="text-gray-700 dark:text-gray-200">
                               {skill.name}

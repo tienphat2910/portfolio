@@ -110,5 +110,16 @@
     "copyright": "© {year} Phat Nguyen. All rights reserved.",
     "madeWith": "Made with",
     "by": "by"
+  },
+  "admin": {
+    "profileSettings": "Profile & Settings",
+    "experienceEducation": "Experience & Education",
+    "skillsExpertise": "Skills & Expertise",
+    "projectsCms": "Projects CMS",
+    "contactInbox": "Contact Inbox",
+    "cmsPortal": "CMS PORTAL",
+    "signedInAs": "Signed in as",
+    "signOut": "Sign Out",
+    "viewPublicWebsite": "View public website"
   }
 }
