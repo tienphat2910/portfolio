@@ -762,14 +762,12 @@ export default function AdminProjectsPage() {
                 rows={3}
                 value={form.short_description_en}
                 onChange={(e) => setForm({ ...form, short_description_en: e.target.value })}
-                required
               />
               <Textarea
                 label={t.shortDescVi}
                 rows={3}
                 value={form.short_description_vi}
                 onChange={(e) => setForm({ ...form, short_description_vi: e.target.value })}
-                required
               />
             </div>
 
