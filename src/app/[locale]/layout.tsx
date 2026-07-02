@@ -5,6 +5,7 @@ import { ThemeProvider } from "../../contexts/ThemeContext";
 import { LanguageProvider } from "../../contexts/LanguageContext";
 import Header from "../../components/Header";
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import "boxicons/css/boxicons.min.css";
 import "devicon/devicon.min.css";
 
@@ -118,6 +119,7 @@ export default async function LocaleLayout({
             <LanguageProvider>
               <Header />
               {children}
+              <Analytics />
             </LanguageProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
